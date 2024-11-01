@@ -1,5 +1,8 @@
 package builds.apiReferences
 
+import builds.apiReferences.kgp.KotlinGradlePluginBuildApiReference
+import builds.apiReferences.kgp.KotlinGradlePluginBuildSearchIndex
+import builds.apiReferences.kgp.KotlinGradlePluginPrepareDokkaTemplates
 import builds.apiReferences.kotlinx.coroutines.KotlinxCoroutinesBuildApiReference
 import builds.apiReferences.kotlinx.coroutines.KotlinxCoroutinesBuildSearchIndex
 import builds.apiReferences.kotlinx.coroutines.KotlinxCoroutinesPrepareDokkaTemplates
@@ -21,11 +24,12 @@ import builds.apiReferences.stdlib.StdlibPrepareDokkaTemplates
 import builds.apiReferences.templates.BuildApiReference
 import builds.apiReferences.templates.BuildApiReferenceSearchIndex
 import builds.apiReferences.templates.PrepareDokkaTemplate
-import builds.apiReferences.vcsRoots.KotlinMetadataJvm
+import builds.apiReferences.vcsRoots.Kotlin
 import builds.apiReferences.vcsRoots.KotlinxCoroutines
 import builds.apiReferences.vcsRoots.KotlinxDatetime
 import builds.apiReferences.vcsRoots.KotlinxIO
 import builds.apiReferences.vcsRoots.KotlinxSerialization
+import builds.apiReferences.vcsRoots.KotlinKGP
 import jetbrains.buildServer.configs.kotlin.Project
 
 object BuildApiReferencesProject : Project({
@@ -56,11 +60,16 @@ object BuildApiReferencesProject : Project({
   buildType(StdlibBuildSearchIndex)
   buildType(StdlibPrepareDokkaTemplates)
 
+  buildType(KotlinGradlePluginBuildApiReference)
+  buildType(KotlinGradlePluginBuildSearchIndex)
+  buildType(KotlinGradlePluginPrepareDokkaTemplates)
+
   vcsRoot(KotlinxSerialization)
   vcsRoot(KotlinxCoroutines)
   vcsRoot(KotlinxDatetime)
   vcsRoot(KotlinxIO)
-  vcsRoot(KotlinMetadataJvm)
+  vcsRoot(Kotlin)
+  vcsRoot(KotlinKGP)
 
   template(PrepareDokkaTemplate)
   template(BuildApiReference)

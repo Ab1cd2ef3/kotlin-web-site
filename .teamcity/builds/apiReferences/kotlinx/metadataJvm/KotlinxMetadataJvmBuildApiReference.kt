@@ -26,7 +26,7 @@ object KotlinxMetadataJvmBuildApiReference : BuildType({
     }
 
     vcs {
-        root(builds.apiReferences.vcsRoots.KotlinMetadataJvm)
+        root(builds.apiReferences.vcsRoots.Kotlin)
     }
 
     steps {
