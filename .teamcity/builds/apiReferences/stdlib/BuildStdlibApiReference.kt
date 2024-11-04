@@ -1,5 +1,6 @@
 package builds.apiReferences.stdlib
 
+import BuildParams.KOTLIN_CORE_API_ID
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.BuildType
 import jetbrains.buildServer.configs.kotlin.buildSteps.script
@@ -30,7 +31,7 @@ object BuildStdlibApiReference : BuildType({
   }
 
   dependencies {
-      dependency(AbsoluteId("Kotlin_KotlinRelease_2020_LibraryReferenceLatestDocs")) {
+      dependency(AbsoluteId(KOTLIN_CORE_API_ID)) {
           artifacts {
               buildRule = tag(tag = "publish", branch = """
                   +:<default>

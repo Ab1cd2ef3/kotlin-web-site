@@ -6,6 +6,7 @@ object BuildParams {
   const val KOTLINX_DATETIME_RELEASE_TAG = "v0.6.1"
   const val KOTLINX_IO_RELEASE_TAG = "0.5.4"
   const val KOTLIN_RELEASE_TAG = "v2.0.20"
+  const val KOTLIN_CORE_API_ID = "Kotlin_KotlinRelease_2020_LibraryReferenceLatestDocs"
 
   const val SEARCH_APP_ID = "7961PKYRXV"
   const val SEARCH_INDEX_NAME = "prod_KOTLINLANG_WEBHELP"

@@ -1,7 +1,6 @@
 package builds.kotlinlang.buidTypes
 
 import builds.kotlinlang.templates.DockerImageBuilder
-import jetbrains.buildServer.configs.kotlin.AbsoluteId
 import jetbrains.buildServer.configs.kotlin.BuildType
 import jetbrains.buildServer.configs.kotlin.FailureAction
 import jetbrains.buildServer.configs.kotlin.buildSteps.ScriptBuildStep
@@ -142,17 +141,6 @@ object BuildSitePages : BuildType({
             artifacts {
                 artifactRules = "+:docs.zip!** => _webhelp/reference/"
             }
-        }
-
-        artifacts(AbsoluteId("Kotlin_KotlinRelease_2020_LibraryReferenceLegacyDocs")) {
-            buildRule = tag("publish", """
-                +:<default>
-                +:*
-            """.trimIndent())
-            artifactRules = """
-                kotlin.test.zip!** => api/latest/kotlin.test
-                kotlin-stdlib.zip!** => api/latest/jvm/stdlib
-            """.trimIndent()
         }
     }
 })
