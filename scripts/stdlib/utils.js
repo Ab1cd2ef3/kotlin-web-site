@@ -25,7 +25,7 @@ module.exports.exists = async function exists(path) {
 
 module.exports.writeRedirects = async function writeRedirects(name, urls) {
     const content = urls
-        .map(([from, to]) => ({ from: '/' + to.replace(/\/index\.html$/, '/'), to: '/' + from }))
+        .map(([from, to]) => ({ from: '/' + from, to: '/' + to.replace(/\/index\.html$/, '/') }))
         .sort((a, b) => a.from.localeCompare(b.from));
 
     console.log(`write ${urls.length} redirects...`);
