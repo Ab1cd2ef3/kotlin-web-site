@@ -46,7 +46,17 @@ async function addFileReports({ type, url }) {
 }
 
 const stats = await readStats();
-const records = await readPagesIndex(DIST_DIR, stats, addFileReports);
+const records = await readPagesIndex(DIST_DIR, stats, addFileReports, function filter(path) {
+    const isSkip = env['WH_SHORT_REPORT'] ? (
+        // optimize by path "api/core/older" takes more than 1 minute only for filesystem iteration
+        (path.startsWith('api/') && (path.endsWith('/older'))) ||
+        path === 'spec' ||
+        path === 'api/latest'
+    ) : false;
+
+    if (isSkip) console.log(`skip: /${path} skipped by path`);
+    return !isSkip;
+});
 
 /**
  * @param {Object.<string, number>} types
@@ -85,11 +95,11 @@ async function reportByType(records) {
             let type = 'other';
 
             if (url.includes('/docs/')) type = 'docs';
-            else if (url.includes('/api/')) type = 'api';
+            else if (url.includes('/api/latest/')) type = 'api';
+            else if (url.includes('/api/')) type = 'api-v2';
 
             if (!result[type]) result[type] = {};
             if (!result[type][url]) result[type][url] = [];
-
 
             const { pageType, ...fileData } = p;
             result[type][url].push(fileData);
@@ -98,8 +108,11 @@ async function reportByType(records) {
         }, {});
 
     await Promise.all(Object.keys(data).map(async function writeTypeReport(key) {
+        const content = Object.fromEntries(Object.entries(data[key])
+            .sort(([a], [b]) => a.localeCompare(b)));
+
         const file = await open(`${REPORT_DIR}/only-${key}-new.json`, 'w');
-        await file.writeFile(JSON.stringify(data[key], null, 2), { encoding: 'utf8' });
+        await file.writeFile(JSON.stringify(content, null, 2), { encoding: 'utf8' });
         await file.close();
     }));
 }

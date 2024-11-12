@@ -74,3 +74,29 @@ export async function loadText(text) {
 export async function loadFile(file) {
     return await loadText(await readFile(file));
 }
+
+/**
+ * @param {import('cheerio').Element} node
+ */
+function cloneAttrsString(node) {
+    return Object.entries((node.attribs || {})).map(([key, value]) => {
+        const val = typeof value === 'string' ? `="${value}"` : '';
+        return `${key}${val}`;
+    }).join(' ');
+}
+
+/**
+ * @param {import('cheerio').Cheerio} article
+ * @param {string} selector
+ * @param {($node: import('cheerio').Cheerio<Element>, attrs: string, content: string) => string} cb
+ */
+export function replaceNode(article, selector, cb) {
+    const listStrong = article.find(selector);
+
+    for (let i = 0, length = listStrong.length; i < length; i++) {
+        const $node = listStrong.eq(i);
+        const newNode = cb($node, cloneAttrsString(listStrong[i]), $node.html());
+        if (newNode) $node.replaceWith(newNode);
+    }
+}
+

@@ -22,8 +22,9 @@ import { newTaskExecutor } from '../lib/pool.mjs';
  * @param {string} rootDir
  * @param {Object.<string, number>} stats
  * @param {(page: Page) => void} reportUrl
+ * @param {(path: string, file: Dirent) => boolean} filter
  */
-export async function readPagesIndex(rootDir, stats, reportUrl) {
+export async function readPagesIndex(rootDir, stats, reportUrl, filter = null) {
     /** @type {IndexRecord[]}*/
     let result = [];
 
@@ -68,13 +69,16 @@ export async function readPagesIndex(rootDir, stats, reportUrl) {
 
         await Promise.all(files.map(async function processFile(file) {
             const filePath = join(folder, file.name);
+            const relativePath = filePath.substring(rootDir.length);
+
+            if (filter && !filter(relativePath, file)) return;
 
             if (file.isDirectory()) {
                 folders.push(filePath);
                 return;
             }
 
-            let pageUrl = filePath.substring(rootDir.length)
+            let pageUrl = relativePath
                 .replace(/\/index\.html$/, '/');
 
             const statsKey = 'https://kotlinlang.org/' + pageUrl;

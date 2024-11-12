@@ -1,5 +1,5 @@
 import { DEFAULT_RECORD, htmlToText } from '../lib/parser.mjs';
-import { findNextElementWith } from '../lib/html.mjs';
+import { findNextElementWith, replaceNode } from '../lib/html.mjs';
 
 /** @typedef {import('domhandler').Node} Node */
 
@@ -36,31 +36,6 @@ function replaceMedia(article, pageUrl) {
         const video = videos.eq(i);
         const url = video.find('object[data]').attr('data');
         video.replaceWith(url ? `&lt;${new URL(url, pageUrl).hostname}&gt;` : '&lt;video&gt;');
-    }
-}
-
-/**
- * @param {import('cheerio').Element} node
- */
-function cloneAttrsString(node) {
-    return Object.entries((node.attribs || {})).map(([key, value]) => {
-        const val = typeof value === 'string' ? `="${value}"` : '';
-        return `${key}${val}`;
-    }).join(' ');
-}
-
-/**
- * @param {import('cheerio').Cheerio} article
- * @param {string} selector
- * @param {($node: import('cheerio').Cheerio<Element>, attrs: string, content: string) => string} cb
- */
-function replaceNode(article, selector, cb) {
-    const listStrong = article.find(selector);
-
-    for (let i = 0, length = listStrong.length; i < length; i++) {
-        const $node = listStrong.eq(i);
-        const newNode = cb($node, cloneAttrsString(listStrong[i]), $node.html());
-        $node.replaceWith(newNode);
     }
 }
 

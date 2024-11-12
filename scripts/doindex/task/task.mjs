@@ -1,4 +1,3 @@
-import { loadFile } from '../lib/html.mjs';
 import { getType } from './types.mjs';
 import { getRecords } from './records.mjs';
 
@@ -12,9 +11,8 @@ async function getResult(url, file, data) {
     const [type, $] = await getType(url, file);
     let records = [];
 
-    if (type.startsWith('Page')) {
-        records = await getRecords($ || await loadFile(file), { url, type, ...data });
-    }
+    if (!type.startsWith('Page')) console.log(`skip: /${url} skipped by ${type}`);
+    else records = await getRecords($, { url, type, ...data });
 
     return { type, records };
 }

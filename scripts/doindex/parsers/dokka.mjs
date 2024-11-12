@@ -1,97 +1,144 @@
+import levenshtein from 'fast-levenshtein';
+
 import { DEFAULT_RECORD, htmlToText } from '../lib/parser.mjs';
-import { findPrevElementWith, nextElement } from '../lib/html.mjs';
-
-/** @typedef {import('domhandler').Node} Node */
-
-/** @typedef {import('domhandler').Element} Element */
-
-/**
- * @template {Node} TNode
- * @param {TNode} node
- * @param {number} level
- * @returns {boolean}
- */
-function isFinalNode(node, level) {
-    return level === 0 && /^h[3-9]$/gi.test(node.tagName);
-}
-
-/**
- * @param {import('cheerio').Cheerio} article
- * @returns {void}
- */
-function dropSourceLinks(article) {
-    article.find('a[href*="https://github.com"]:contains("source\\)")').remove();
-}
-
-/**
- * @param {import('cheerio').Cheerio} article
- * @returns {void}
- */
-function dropPlatformSwitches(article) {
-    article.find('div[data-kotlin-version][data-platform] > .tags').remove();
-}
+import { nextElement, replaceNode } from '../lib/html.mjs';
 
 /**
  * @param {import('cheerio').CheerioAPI} $
  * @param {import('cheerio').Cheerio} article
- * @returns {[text: string, url: string][]}
+ * @returns {string[]}
  */
 function dropBreadcrumbs($, article) {
-    const breadcrumbsNode = article.find('.api-docs-breadcrumbs').remove();
+    const breadcrumbsNode = article.find('.breadcrumbs').remove();
 
     const breadcrumbs = [...breadcrumbsNode.find('a')]
         .map(function mapBreadcrumbs(el) {
-            const $el = $(el);
-            return [$el.text(), $el.attr('href')];
+            return $(el).text();
         });
 
-    const first = breadcrumbs?.[0]?.[0];
+    const first = breadcrumbs?.[0];
 
-    if (first === 'kotlin-stdlib' || first === 'kotlin.test')
+    if (first === 'kotlin-stdlib' || first === 'kotlin-test' || first === 'kotlin-reflect')
         breadcrumbs.shift();
 
     return breadcrumbs;
 }
 
-const SIGNATURE_SELECTOR = 'div[data-kotlin-version][data-platform]:has(> .signature)';
-
 /**
- * @template {Node} TNode
- * @param {TNode} child
- * @returns {boolean}
+ * @param {import('cheerio').Cheerio} article
  */
-function isSignatureDescriptionNode(child) {
-    return !child.tagName || child.tagName === 'p';
+function dropTitleNode(article) {
+    let titleNode = article.find('.cover > h1.cover');
+
+    if (titleNode.length > 1)
+        console.error(`err: api package has two headers unexpectedly`);
+
+    return titleNode.remove().text();
 }
 
 /**
  * @param {import('cheerio').CheerioAPI} $
  * @param {import('cheerio').Cheerio} article
+ */
+async function dropAllTypes($, article) {
+    const indexHeader = article.find('h2:contains("Index"):has(+ a[href*="all-types.html"])');
+    if (indexHeader?.length > 0) {
+        const titles = indexHeader.filter(function filterIndexTitle(i, el) {
+            return $(el).text().trim() === 'Index';
+        });
+
+        const links = titles.find('+ a[href*="all-types.html"]');
+
+        if (titles.length !== links.length)
+            throw new Error(`dropAllTypes: links and titles are not equal: ${titles.length} !== ${links.length}`);
+
+        titles.remove();
+        links.remove();
+    }
+}
+
+/**
+ * @param {import('cheerio').Cheerio} $article
  * @returns {void}
  */
-function swapSignatureCodeAndText($, article) {
-    const signatures = article.find(SIGNATURE_SELECTOR);
+async function dropWorkingElements($article) {
+    $article.find([
+        ':is(.clearfix,.floating-right):has(a[href*="https://github.com"]:contains("source"))', // Drop (source) links
+        '.platform-bookmarks-row', // Platform tabs
+        '.copy-icon, .copy-popup-wrapper', // copy icon
+        '.kdoc-tag:has(h4:contains("Since Kotlin"))' // Since Kotlin section
+    ].join(',')).remove();
+}
 
-    for (const signature of signatures) {
-        const nextNode = nextElement(signature);
+/**
+ * @param {import('cheerio').CheerioAPI} $
+ * @param {import('cheerio').Cheerio} $article
+ */
+async function dropInheritors($, $article) {
+    const headers = $article.find('h4:contains("Inheritors")');
 
-        /* Filter empty and description with code samples.
-           Cause code samples less interesting than signature? */
-        const hasDescription = Boolean(nextNode && $(nextNode).is('div[data-kotlin-version][data-platform]:has(> p)') &&
-            nextNode.childNodes.every(isSignatureDescriptionNode));
+    for (const title of headers) {
+        const $next = $(nextElement(title));
+        if ($next.is('.table')) {
+            $next.remove();
+            $(title).remove();
+        }
+    }
+}
 
-        if (hasDescription) {
-            /* if description for more than one signature, we put it before first.
-               see: https://kotlinlang.org/api/latest/kotlin.test/kotlin.test/assert-contains.html#kotlin.test$assertContains(kotlin.ranges.IntRange,%20kotlin.Int,%20kotlin.String?) */
+/**
+ * @param {import('cheerio').CheerioAPI} $
+ * @param {import('cheerio').Cheerio} $article
+ * @param {URL} pageUrl
+ */
+async function replaceInternalLinks($, $article, pageUrl) {
+    replaceNode($article, 'a', ($node, attrs, content) => {
+        const href = attrs.href;
+        const link = new URL(href, pageUrl);
+        const isApiInternalLink = pageUrl.hostname === link.hostname && link.pathname.startsWith('/api/');
 
-            const node = findPrevElementWith(nextNode, node => !$(node).is(SIGNATURE_SELECTOR))?.nextSibling;
-            const firstSignature = (node && node !== nextNode && $(node).is(SIGNATURE_SELECTOR) && node) || null;
+        if (isApiInternalLink) return `<a ${attrs}><code>${content}</code></a>`;
+    });
+}
 
-            if (firstSignature) {
-                /* move description before all signatures */
-                const description = $(nextNode).remove();
-                description.insertBefore(firstSignature);
-            }
+/**
+ * @param {import('cheerio').Cheerio} node
+ */
+async function replaceDokkaSemantic(node) {
+    replaceNode(node, '.symbol.monospace', ($node, attrs, content) => (
+        `<code ${attrs}>${content}</code>`
+    ));
+    replaceNode(node, 'u', ($node, attrs, content) => (
+        `<code ${attrs}>${content}</code>`
+    ));
+}
+
+/**
+ * @param {import('cheerio').CheerioAPI} $
+ * @param {import('cheerio').Cheerio} article
+ */
+async function replacePlatformDuplicate($, article) {
+    const definition = article.find(':is(.content.sourceset-dependent-content)');
+
+    definition.find('.token').filter(function filterPlatformTokens(i, el) {
+        const text = $(el).text().trim();
+        return text === 'actual' || text === 'expect' || text === 'external';
+    }).remove();
+
+    if (definition.length > 1) {
+        const list = [];
+
+        for (const el of definition) {
+            const text = (await htmlToText($, [el.firstChild]));
+
+            const isUnique = list.every(function calcTextsCorrelation(previous) {
+                const diff = levenshtein.get(previous, text);
+                const k = Math.ceil((previous.length + text.length) / diff);
+                return diff > 1 && k < 3;
+            });
+
+            if (isUnique) list.push(text);
+            else $(el).remove();
         }
     }
 }
@@ -99,24 +146,15 @@ function swapSignatureCodeAndText($, article) {
 /**
  * @param {import('cheerio').CheerioAPI} $
  * @param {import('cheerio').Cheerio} article
+ * @param {URL} pageUrl
  */
-function findTitleNode($, article) {
-    let titleNode = article.find('h1[id]');
-    const packageTitle = article.find('h2[id^=package-]');
-
-    if (packageTitle.length) titleNode = packageTitle;
-
-    /**
-     * API is not a package, no page title:
-     *  check h2 heading. See: https://kotlinlang.org/api/latest/jvm/stdlib/
-     */
-    if (!titleNode.length)
-        titleNode = article.find('h2[id]');
-
-    if (titleNode.length > 1)
-        console.error(`err: legacy api package has two headers unexpectedly`);
-
-    return titleNode;
+async function contentNodesImprove($, article, pageUrl) {
+    await dropAllTypes($, article);
+    await dropWorkingElements(article);
+    await dropInheritors($, article);
+    await replacePlatformDuplicate($, article);
+    await replaceInternalLinks($, article, pageUrl);
+    await replaceDokkaSemantic(article);
 }
 
 /**
@@ -124,50 +162,65 @@ function findTitleNode($, article) {
  * @param {string} url
  * @param {Object.<string, *>} data
  */
-async function legacyApi($, url, data) {
-    /** @type {string|null} */
-    let content = null;
+async function apiReference($, url, data) {
+    const pageUrl = 'https://kotlinlang.org/'; // new URL($('meta[property="og:url"][content]').attr('content'));
+    const finalUrl = '/' + url;
+    const normalizedUrl = new URL(finalUrl, pageUrl);
 
-    /** @type {import('cheerio').Cheerio} */
-    const $article = $('.page-content');
-    const pageUrl = new URL($('meta[property="og:url"][content]').attr('content'));
+    const $article = $('#main');
+    let title = dropTitleNode($article);
+    let content = '';
 
-    if (!$article.length) {
-        console.warn(`skip: /${url} with unexpected page dom!!!`);
-        return [];
-    }
+    if (url.match(/\/kotlin-stdlib\/(all-types\.html)?$/)) title = 'Kotlin Standard Library';
+    else if (url.match(/\/kotlin-test\/(all-types\.html)?$/)) title = 'Kotlin Test';
+    else if (url.match(/\/kotlin-reflect\/(all-types\.html)?$/)) title = 'Kotlin JVM reflection extensions';
 
-    dropPlatformSwitches($article);
-    dropSourceLinks($article);
-    // ToDo: enable when filters with api to be in search UI
-    // swapSignatureCodeAndText($, $article);
-
-    const levels = dropBreadcrumbs($, $article);
-
-    const $titleNode = findTitleNode($, $article);
-
-    if ($titleNode.length)
-        content = await htmlToText($, [$titleNode[0].nextSibling], isFinalNode);
-    else {
-        // check extension page like: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.time/java.time.-duration/
-        const isExtensionPage = $article.find('> *:first-child').eq(0).is('h3[id^="extensions-for-"]');
-        if (!isExtensionPage) {
-            throw new Error(`Title for ${url} not found!`);
-        }
-    }
-
-    const breadcrumbs = levels.map(([text]) => text);
-
-    let title = levels.length ?
-        breadcrumbs.join(' \u203a ') :
-        $titleNode.text();
-
-    if (url.endsWith('/alltypes/')) {
+    if (url.endsWith('/all-types.html')) {
         content = `All types for ${title}`;
         title += ' (alltypes)';
     }
 
-    const finalUrl = '/' + url;
+    if ($article.is(':has(> .main-content[data-page-type="package"])')) {
+        title = $article.find('.breadcrumbs .current').text();
+    }
+
+    if (!content) {
+        const elements = $article.find('div.cover, div.cover + .platform-hinted');
+
+        if (elements.length) {
+            // Pre-process elements markup for better index
+            await contentNodesImprove($, elements, normalizedUrl);
+
+            elements.find('.symbol.monospace .block').append($('<span> </span>'));
+            content = await htmlToText($, [...elements].map(el => el.firstChild));
+        }
+    }
+
+    let breadcrumbs = [...dropBreadcrumbs($, $article), title];
+
+    const [item1, item2] = breadcrumbs.slice(-2);
+
+    // is page <constructor>?
+    if (item1?.match(/^[A-Z]/) && item1 === item2) {
+        // Double-check
+        if ($article.find('.main-content[data-page-type="member"]').length) {
+            breadcrumbs.pop();
+            breadcrumbs[breadcrumbs.length - 1] = `${item1} &lt;constructor&gt;`;
+        }
+    }
+
+    // is page *.Companion without additional content?
+    if (breadcrumbs[breadcrumbs.length - 1] === 'Companion' && content === '`object Companion`')
+        return [];
+
+    // Replace "SomeClass > Companion" => "SomeClass.Companion"
+    breadcrumbs = breadcrumbs.reduce(function joinCompanionTitle(result, item, i) {
+        if (item === 'Companion') result[result.length - 1] = `${result[result.length - 1]}.${item}`;
+        else result.push(item);
+        return result;
+    }, []);
+
+    const mainTitle = breadcrumbs.join(' \u203a ');
 
     return [
         {
@@ -177,16 +230,16 @@ async function legacyApi($, url, data) {
             objectID: finalUrl.replace(/\.html$/g, ''),
             parent: finalUrl,
             pageType: 'api',
-            url: new URL(finalUrl, pageUrl).toString(),
+            url: normalizedUrl.toString(),
 
             headings: breadcrumbs.length ? breadcrumbs.reverse().join(' | ') : title,
-            mainTitle: title,
-            pageTitle: title,
+            mainTitle,
+            pageTitle: mainTitle,
+            pageViews: 0,
 
             content
         }
     ];
 }
 
-export const Page_API_stdlib = legacyApi;
-export const Page_API_test = legacyApi;
+export const Page_API = apiReference;
