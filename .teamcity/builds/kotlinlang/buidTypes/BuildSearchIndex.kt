@@ -26,6 +26,7 @@ object BuildSearchIndex : BuildType({
     param("env.WH_INDEX_NAME", SEARCH_INDEX_NAME)
     param("env.WH_SEARCH_USER", SEARCH_APP_ID)
     param("env.WH_SEARCH_WRITE_KEY", "%ALGOLIA_WRITE_API_KEY%")
+    param("env.NODE_OPTIONS", "--max-old-space-size=32768")
   }
 
   vcs {
