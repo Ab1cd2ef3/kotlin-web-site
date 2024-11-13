@@ -22,6 +22,10 @@ object BuildSearchIndex : BuildType({
       search-report/** => search-report.zip
   """.trimIndent()
 
+  requirements {
+    doesNotContain("docker.server.osType", "windows")
+  }
+
   params {
     param("env.WH_INDEX_NAME", SEARCH_INDEX_NAME)
     param("env.WH_SEARCH_USER", SEARCH_APP_ID)
@@ -48,7 +52,6 @@ object BuildSearchIndex : BuildType({
       """.trimIndent()
       dockerImage = "node:22-alpine"
       workingDir = "scripts/doindex/"
-      dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
       dockerPull = true
     }
   }
@@ -81,6 +84,7 @@ object BuildSearchIndex : BuildType({
         cleanDestination = true
       }
     }
+
     listOf(
       Pair(BuildStdlibApiReference, "core"),
       Pair(KotlinxCoroutinesBuildApiReference, "kotlinx.coroutines"),
@@ -88,14 +92,15 @@ object BuildSearchIndex : BuildType({
       Pair(KotlinxIOBuildApiReference, "kotlinx-io"),
       Pair(KotlinxMetadataJvmBuildApiReference, "kotlinx-metadata-jvm"),
       Pair(KotlinxSerializationBuildApiReference, "kotlinx.serialization"),
-    ).forEach { (build, path) ->
-      dependency(build) {
-          snapshot {}
-          artifacts {
-              artifactRules = "+:pages.zip!** => dist/api/$path/"
-              cleanDestination = true
-          }
+    ).forEach { (build, path) -> dependency(build) {
+      snapshot {}
+      artifacts {
+        artifactRules = """
+          ?:pages.zip!** => dist/api/$path/
+          ?:latest-version.zip!all-libs/** => dist/api/$path/
+        """.trimIndent()
+        cleanDestination = true
       }
-    }
+    } }
   }
 })
