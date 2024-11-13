@@ -25,7 +25,7 @@ import { newTaskExecutor } from '../lib/pool.mjs';
  * @param {(path: string, file: Dirent) => boolean} filter
  */
 export async function readPagesIndex(rootDir, stats, reportUrl, filter = null) {
-    /** @type {IndexRecord[]}*/
+    /** @type {IndexRecord[]} */
     let result = [];
 
     let isPathsWalked = false;
@@ -50,7 +50,9 @@ export async function readPagesIndex(rootDir, stats, reportUrl, filter = null) {
             return isValid;
         });
 
-        result = [...result, ...records];
+        for (const record of records) {
+            result.push(record);
+        }
     }
 
     function isFinished() {
@@ -61,10 +63,9 @@ export async function readPagesIndex(rootDir, stats, reportUrl, filter = null) {
         import.meta.dirname + '/task.mjs', onReady, isFinished
     );
 
-    const folders = [rootDir];
+    const folders = new Set([rootDir]);
 
-    while (folders.length > 0) {
-        const folder = folders.pop();
+    for (const folder of folders.values()) {
         const files = await readdir(folder, { withFileTypes: true });
 
         await Promise.all(files.map(async function processFile(file) {
@@ -74,7 +75,7 @@ export async function readPagesIndex(rootDir, stats, reportUrl, filter = null) {
             if (filter && !filter(relativePath, file)) return;
 
             if (file.isDirectory()) {
-                folders.push(filePath);
+                folders.add(filePath);
                 return;
             }
 
@@ -90,27 +91,27 @@ export async function readPagesIndex(rootDir, stats, reportUrl, filter = null) {
     isPathsWalked = true;
     updatePoolState();
 
-    return finish.then(function finalizeResult() {
-        // do safe for algolia record.
-        // ToDo: if you want use tags in algolia drop it,
-        //  but remember **ALL** key and values should be escaped in-place.
-        for (const record of result) {
-            for (const [key, val] of Object.entries(record)) {
-                if (typeof val === 'string') {
-                    record[key] = val
-                        .replace(/</g, '&lt;')
-                        .replace(/>/g, '&gt;');
-                }
+    await  finish
+
+    // do safe for algolia record.
+    // ToDo: if you want use tags in algolia drop it,
+    //  but remember **ALL** key and values should be escaped in-place.
+    for (const record of result) {
+        for (const [key, val] of Object.entries(record)) {
+            if (typeof val === 'string') {
+                record[key] = val
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
             }
         }
+    }
 
-        // `objectID` should be uniq for any record
-        // if it isn't, it will be failed in push to algolia without extra description
-        if (!result.every(isUnique))
-            throw new Error(`Object ${id} isn't uniq`);
+    // `objectID` should be uniq for any record
+    // if it isn't, it will be failed in push to algolia without extra description
+    if (!result.every(isUnique))
+        throw new Error(`Object ${id} isn't uniq`);
 
-        return result;
-    });
+    return result;
 }
 
 /**
