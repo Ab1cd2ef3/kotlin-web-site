@@ -1,4 +1,4 @@
-import { CDATA, Element, Node, Text } from 'domhandler';
+import { CDATA, Element, Node, Text, Comment } from 'domhandler';
 
 export const DEFAULT_RECORD = Object.freeze({
     objectID: null,
@@ -41,6 +41,9 @@ export async function htmlToText($, list, isFinalNode) {
 
         if (!node) continue;
         if (isFinalNode && isFinalNode(node, level)) break;
+
+        if (node instanceof Comment)
+            continue;
 
         if (!(node instanceof Node)) {
             contentNodes.push(node);
