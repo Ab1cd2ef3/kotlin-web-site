@@ -271,6 +271,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 kotlin {
     compilerOptions {
+        // Sets apiVersion and jvmTarget
+        apiVersion.set(KotlinVersion.%gradleLanguageVersion%)
+        jvmTarget.set(JvmTarget.JVM_1_8)
+        
         // Single experimental argument
         freeCompilerArgs.add("-Xexport-kdoc")
 
@@ -280,8 +284,8 @@ kotlin {
         // List of arguments
         freeCompilerArgs.addAll(
             listOf(
-                "Xno-receiver-assertions",
-                "Xno-call-assertions"
+                "-Xno-receiver-assertions",
+                "-Xno-call-assertions"
             )
         ) 
     }
@@ -297,10 +301,16 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 tasks.named('compileKotlin', KotlinCompilationTask) {
     compilerOptions {
+        // Sets apiVersion and jvmTarget
+        apiVersion = KotlinVersion.%gradleLanguageVersion%
+        jvmTarget = JvmTarget.JVM_1_8
+        
         // Single experimental argument
         freeCompilerArgs.add("-Xexport-kdoc")
+        
         // Single additional argument, can be a key-value pair
         freeCompilerArgs.add("-Xno-param-assertions")
+        
         // List of arguments
         freeCompilerArgs.addAll(["-Xno-receiver-assertions", "-Xno-call-assertions"])
     }
@@ -324,7 +334,7 @@ To set a language version, use the following syntax:
 ```kotlin
 kotlin {
     compilerOptions {
-        languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.% gradleLanguageVersion %)
+        languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.%gradleLanguageVersion%)
     }
 }
 ```
