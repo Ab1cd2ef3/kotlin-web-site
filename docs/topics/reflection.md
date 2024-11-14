@@ -64,7 +64,7 @@ statically known Kotlin class, you can use the _class literal_ syntax:
 val c = MyClass::class
 ```
 
-The reference is a [KClass](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect/-k-class/index.html) type value.
+The reference is a [KClass](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.reflect/-k-class/) type value.
 
 >On JVM: a Kotlin class reference is not the same as a Java class reference. To obtain a Java class reference,
 >use the `.java` property on a `KClass` instance.
@@ -88,7 +88,7 @@ regardless of the type of the receiver expression (`Widget`).
 References to functions, properties, and constructors can
 also be called or used as instances of [function types](lambdas.md#function-types).
 
-The common supertype for all callable references is [`KCallable<out R>`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect/-k-callable/index.html),
+The common supertype for all callable references is [`KCallable<out R>`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.reflect/-k-callable/),
 where `R` is the return value type. It is the property type for properties, and the constructed type for constructors.
 
 ### Function references
@@ -116,7 +116,7 @@ fun main() {
 
 Here `::isOdd` is a value of function type `(Int) -> Boolean`.
 
-Function references belong to one of the [`KFunction<out R>`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect/-k-function/index.html)
+Function references belong to one of the [`KFunction<out R>`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.reflect/-k-function/)
 subtypes, depending on the parameter count. For instance, `KFunction3<T1, T2, T3, R>`.
 
 `::` can be used with overloaded functions when the expected type is known from the context.
@@ -199,9 +199,9 @@ fun main() {
 
 The expression `::x` evaluates to a `KProperty0<Int>` type property object. You can read its
 value using `get()` or retrieve the property name using the `name` property. For more information, see
-the [docs on the `KProperty` class](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect/-k-property/index.html).
+the [docs on the `KProperty` class](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.reflect/-k-property/).
 
-For a mutable property such as `var y = 1`, `::y` returns a value with the [`KMutableProperty0<Int>`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect/-k-mutable-property/index.html) type
+For a mutable property such as `var y = 1`, `::y` returns a value with the [`KMutableProperty0<Int>`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.reflect/-k-mutable-property/) type
 which has a `set()` method:
 
 ```kotlin
@@ -296,7 +296,7 @@ function(::Foo)
 ```
 
 Callable references to constructors are typed as one of the
-[`KFunction<out R>`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect/-k-function/index.html) subtypes
+[`KFunction<out R>`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.reflect/-k-function/) subtypes
 depending on the parameter count.
 
 ### Bound function and property references

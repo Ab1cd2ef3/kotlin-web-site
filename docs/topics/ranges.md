@@ -1,7 +1,7 @@
 [//]: # (title: Ranges and progressions)
 
-Kotlin lets you easily create ranges of values using the [`.rangeTo()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/range-to.html)
-and [`.rangeUntil()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/range-until.html) functions from the 
+Kotlin lets you easily create ranges of values using the [`.rangeTo()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.ranges/range-to.html)
+and [`.rangeUntil()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.ranges/range-until.html) functions from the 
 `kotlin.ranges` package. 
 
 To create:
@@ -37,7 +37,7 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-ranges-for-loop"}
 
-To iterate numbers in reverse order, use the [`downTo`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/down-to.html)
+To iterate numbers in reverse order, use the [`downTo`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.ranges/down-to.html)
 function instead of `..`.
 
 ```kotlin
@@ -51,7 +51,7 @@ fun main() {
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="kotlin-ranges-downto"}
 
 It is also possible to iterate over numbers with an arbitrary step (not necessarily 1). This is done via the
-[`step`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/step.html) function.
+[`step`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.ranges/step.html) function.
 
 ```kotlin
 
@@ -74,9 +74,9 @@ fun main() {
 
 The ranges of integral types, such as `Int`, `Long`, and `Char`, can be treated as
 [arithmetic progressions](https://en.wikipedia.org/wiki/Arithmetic_progression).
-In Kotlin, these progressions are defined by special types: [`IntProgression`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-progression/index.html),
-[`LongProgression`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-long-progression/index.html),
-and [`CharProgression`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-char-progression/index.html).
+In Kotlin, these progressions are defined by special types: [`IntProgression`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.ranges/-int-progression/),
+[`LongProgression`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.ranges/-long-progression/),
+and [`CharProgression`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.ranges/-char-progression/).
 
 Progressions have three essential properties: the `first` element, the `last` element, and a non-zero `step`.
 The first element is `first`, subsequent elements are the previous element plus a `step`. 

@@ -74,7 +74,7 @@ The Kotlin standard library provides factory methods for several useful kinds of
 
 ### Lazy properties
 
-[`lazy()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/lazy.html) is a function that takes a lambda and returns an instance of `Lazy<T>`, which can serve as a delegate for implementing a lazy property.
+[`lazy()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/lazy.html) is a function that takes a lambda and returns an instance of `Lazy<T>`, which can serve as a delegate for implementing a lazy property.
 The first call to `get()` executes the lambda passed to `lazy()` and remembers the result.
 Subsequent calls to `get()` simply return the remembered result. 
 
@@ -100,7 +100,7 @@ you can use `LazyThreadSafetyMode.NONE`. It doesn't incur any thread-safety guar
 
 ### Observable properties
 
-[`Delegates.observable()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.properties/-delegates/observable.html)
+[`Delegates.observable()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.properties/-delegates/observable.html)
 takes two arguments: the initial value and a handler for modifications.
 
 The handler is called every time you assign to the property (*after* the assignment has been performed). It has three
@@ -124,7 +124,7 @@ fun main() {
 ```
 {kotlin-runnable="true"}
 
-If you want to intercept assignments and *veto* them, use [`vetoable()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.properties/-delegates/vetoable.html) instead of `observable()`.
+If you want to intercept assignments and *veto* them, use [`vetoable()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.properties/-delegates/vetoable.html) instead of `observable()`.
 The handler passed to `vetoable` will be called *before* the assignment of a new property value.
 
 ## Delegating to another property

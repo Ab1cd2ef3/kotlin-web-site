@@ -1,8 +1,8 @@
 [//]: # (title: Sequences)
 
-Along with collections, the Kotlin standard library contains another type – _sequences_ ([`Sequence<T>`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/-sequence/index.html)).
+Along with collections, the Kotlin standard library contains another type – _sequences_ ([`Sequence<T>`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.sequences/-sequence/)).
 Unlike collections, sequences don't contain elements, they produce them while iterating. 
-Sequences offer the same functions as [`Iterable`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-iterable/index.html)
+Sequences offer the same functions as [`Iterable`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-iterable/)
 but implement another approach to multi-step collection processing.
 
 When the processing of an `Iterable` includes multiple steps, they are executed eagerly: each processing step completes
@@ -22,7 +22,7 @@ and decide which one is better for your case.
 
 ### From elements
 
-To create a sequence, call the [`sequenceOf()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/sequence-of.html)
+To create a sequence, call the [`sequenceOf()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.sequences/sequence-of.html)
 function listing the elements as its arguments.
 
 ```kotlin
@@ -32,7 +32,7 @@ val numbersSequence = sequenceOf("four", "three", "two", "one")
 ### From an Iterable
 
 If you already have an `Iterable` object (such as a `List` or a `Set`), you can create a sequence from it by calling
-[`asSequence()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/as-sequence.html).
+[`asSequence()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/as-sequence.html).
 
 ```kotlin
 val numbers = listOf("one", "two", "three", "four")
@@ -43,7 +43,7 @@ val numbersSequence = numbers.asSequence()
 ### From a function
 
 One more way to create a sequence is by building it with a function that calculates its elements.
-To build a sequence based on a function, call [`generateSequence()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/generate-sequence.html)
+To build a sequence based on a function, call [`generateSequence()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.sequences/generate-sequence.html)
 with this function as an argument. Optionally, you can specify the first element as an explicit value or a result of a function call.
 The sequence generation stops when the provided function returns `null`. So, the sequence in the example below is infinite.
 
@@ -75,9 +75,9 @@ fun main() {
 ### From chunks
 
 Finally, there is a function that lets you produce sequence elements one by one or by chunks of arbitrary sizes – the
-[`sequence()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/sequence.html) function.
-This function takes a lambda expression containing calls of [`yield()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/-sequence-scope/yield.html)
-and [`yieldAll()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/-sequence-scope/yield-all.html) functions.
+[`sequence()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.sequences/sequence.html) function.
+This function takes a lambda expression containing calls of [`yield()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.sequences/-sequence-scope/yield.html)
+and [`yieldAll()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.sequences/-sequence-scope/yield-all.html) functions.
 They return an element to the sequence consumer and suspend the execution of `sequence()` until the next element is
 requested by the consumer. `yield()` takes a single element as an argument; `yieldAll()` can take an `Iterable` object,
 an `Iterator`, or another `Sequence`. A `Sequence` argument of `yieldAll()` can be infinite. However, such a call must be

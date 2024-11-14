@@ -9,10 +9,10 @@ transformations, and so on.
 Collection operations are declared in the standard library in two ways: [member functions](classes.md#class-members) of
 collection interfaces and [extension functions](extensions.md#extension-functions). 
 
-Member functions define operations that are essential for a collection type. For example, [`Collection`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-collection/index.html)
-contains the function [`isEmpty()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-collection/is-empty.html)
-for checking its emptiness; [`List`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html) contains
-[`get()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/get.html) for index access to elements,
+Member functions define operations that are essential for a collection type. For example, [`Collection`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-collection/)
+contains the function [`isEmpty()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-collection/is-empty.html)
+for checking its emptiness; [`List`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/) contains
+[`get()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/get.html) for index access to elements,
 and so on.
 
 When you create your own implementations of collection interfaces, you must implement their member functions.

@@ -159,7 +159,7 @@ fun signalCheck(signalStatus: Any) {
 In Kotlin 2.0.0, the K2 compiler treats inline functions differently,
 allowing it to determine in combination with other compiler analyses whether it's safe to smart-cast.
 
-Specifically, inline functions are now treated as having an implicit [`callsInPlace`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.contracts/-contract-builder/calls-in-place.html)
+Specifically, inline functions are now treated as having an implicit [`callsInPlace`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.contracts/-contract-builder/calls-in-place.html)
 contract. This means that any lambda functions passed to an inline function are called in place. Since lambda functions
 are called in place, the compiler knows that a lambda function can't leak references to any variables contained within
 its function body.

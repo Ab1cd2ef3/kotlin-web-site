@@ -23,7 +23,7 @@ We'll take you through the basic tips on how to get up and running with solving 
 ### Day 1: Calorie counting
 
 Learn about the [Kotlin Advent of Code template](https://github.com/kotlin-hands-on/advent-of-code-kotlin-template) and convenience functions for working with strings and collections in Kotlin, 
-such as [`maxOf()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/max-of.html) and [`sumOf()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/sum-of.html).
+such as [`maxOf()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/max-of.html) and [`sumOf()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/sum-of.html).
 See how extension functions can help you structure your solution in a nice manner.
 
 * Read the puzzle description on [Advent of Code](https://adventofcode.com/2022/day/1)
@@ -34,7 +34,7 @@ See how extension functions can help you structure your solution in a nice manne
 ### Day 2: Rock paper scissors
 
 Understand operations on the `Char` type in Kotlin, see how the `Pair` type and the `to` constructor work well with pattern matching.
-Understand how to order your own objects using the [`compareTo()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/compare-to.html) function.
+Understand how to order your own objects using the [`compareTo()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-comparable/compare-to.html) function.
 
 * Read the puzzle description on [Advent of Code](https://adventofcode.com/2022/day/2)
 * Check out the solution in the video:
@@ -66,7 +66,7 @@ and how extension functions for the `String` and `IntRange` types make it easy t
 ### Day 5: Supply stacks
 
 Learn about constructing more complex objects with factory functions,
-how to use regular expressions, and the double-ended [`ArrayDeque`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-deque/) type.
+how to use regular expressions, and the double-ended [`ArrayDeque`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-array-deque/) type.
 
 * Read the puzzle description on [Advent of Code](https://adventofcode.com/2022/day/5)
 * Check out the solution in the video:
@@ -219,7 +219,7 @@ or watch the video:
 
 ### Day 3: Toboggan trajectory
 
-Compare imperative and more functional code styles, work with pairs and the [`reduce()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/reduce.html)
+Compare imperative and more functional code styles, work with pairs and the [`reduce()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/reduce.html)
 function, edit code in the column selection mode, and fix integer overflows.
 
 * Read the puzzle description on [Advent of Code](https://adventofcode.com/2020/day/3)

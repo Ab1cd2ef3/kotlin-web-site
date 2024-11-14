@@ -6,7 +6,7 @@ For more specific operations available for `List` and `Map`, see [List-specific 
 
 ## Adding elements
 
-To add a single element to a list or a set, use the [`add()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/add.html) function. The specified object is appended to the end of the collection.
+To add a single element to a list or a set, use the [`add()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-list/add.html) function. The specified object is appended to the end of the collection.
 
 ```kotlin
 

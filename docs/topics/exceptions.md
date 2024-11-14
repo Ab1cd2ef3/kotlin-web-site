@@ -627,7 +627,7 @@ but the string doesn't have an appropriate format.
     >
     {style="note"}
 
-* [`NullPointerException`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-null-pointer-exception/): This exception is thrown when an application attempts to use an object reference that has the `null` value.
+* [`NullPointerException`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-null-pointer-exception/): This exception is thrown when an application attempts to use an object reference that has the `null` value.
 Even though Kotlin's null safety features significantly reduce the risk of NullPointerExceptions, 
 they can still occur either through deliberate use of the `!!` operator or when interacting with Java, which lacks 
 Kotlin's null safety.

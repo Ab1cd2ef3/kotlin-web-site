@@ -1,7 +1,7 @@
 [//]: # (title: Arrays)
 
 An array is a data structure that holds a fixed number of values of the same type or its subtypes. 
-The most common type of array in Kotlin is the object-type array, represented by the [`Array`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/) class.
+The most common type of array in Kotlin is the object-type array, represented by the [`Array`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/) class.
 
 > If you use primitives in an object-type array, this has a performance impact because your primitives are [boxed](https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html)
 > into objects. To avoid boxing overhead, use [primitive-type arrays](#primitive-type-arrays) instead.
@@ -42,11 +42,11 @@ For more information about collections, see [Collections overview](collections-o
 ## Create arrays
 
 To create arrays in Kotlin, you can use:
-* functions, such as [`arrayOf()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/array-of.html), [`arrayOfNulls()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/array-of-nulls.html#kotlin$arrayOfNulls(kotlin.Int)) 
-or [`emptyArray()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/empty-array.html).
+* functions, such as [`arrayOf()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/array-of.html), [`arrayOfNulls()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/array-of-nulls.html#kotlin$arrayOfNulls(kotlin.Int)) 
+or [`emptyArray()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/empty-array.html).
 * the `Array` constructor.
 
-This example uses the [`arrayOf()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/array-of.html) function 
+This example uses the [`arrayOf()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/array-of.html) function 
 and passes item values to it:
 
 ```kotlin
@@ -61,7 +61,7 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="arrays-simple-array-kotlin"}
 
-This example uses the [`arrayOfNulls()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/array-of-nulls.html#kotlin$arrayOfNulls(kotlin.Int))
+This example uses the [`arrayOfNulls()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/array-of-nulls.html#kotlin$arrayOfNulls(kotlin.Int))
 function to create an array of a given size filled with `null` elements:
 
 ```kotlin
@@ -76,7 +76,7 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3" id="arrays-null-array-kotlin"}
 
-This example uses the [`emptyArray()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/empty-array.html) function to 
+This example uses the [`emptyArray()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/empty-array.html) function to 
 create an empty array :
 
 ```kotlin
@@ -202,8 +202,8 @@ For more information, see [Variable number of arguments (varargs)](functions.md#
 
 ### Compare arrays
 
-To compare whether two arrays have the same elements in the same order, use the [`.contentEquals()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/content-equals.html)
-and [`.contentDeepEquals()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/content-deep-equals.html) 
+To compare whether two arrays have the same elements in the same order, use the [`.contentEquals()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/content-equals.html)
+and [`.contentDeepEquals()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/content-deep-equals.html) 
 functions:
 
 ```kotlin
@@ -236,11 +236,11 @@ fun main() {
 ### Transform arrays
 
 Kotlin has many useful functions to transform arrays. This document highlights a few but this isn't an 
-exhaustive list. For the full list of functions, see our [API reference](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/).
+exhaustive list. For the full list of functions, see our [API reference](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-array/).
 
 #### Sum
 
-To return the sum of all elements in an array, use the [`.sum()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/sum.html)
+To return the sum of all elements in an array, use the [`.sum()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/sum.html)
 function:
 
 ```Kotlin
@@ -262,7 +262,7 @@ fun main() {
 
 #### Shuffle
 
-To randomly shuffle the elements in an array, use the [`.shuffle()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/shuffle.html)
+To randomly shuffle the elements in an array, use the [`.shuffle()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/shuffle.html)
 function:
 
 ```Kotlin
@@ -289,8 +289,8 @@ and vice versa.
 
 #### Convert to List or Set
 
-To convert an array to a `List` or `Set`, use the [`.toList()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/to-list.html)
-and [`.toSet()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/to-set.html) functions.
+To convert an array to a `List` or `Set`, use the [`.toList()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/to-list.html)
+and [`.toSet()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/to-set.html) functions.
 
 ```kotlin
 fun main() {
@@ -311,12 +311,12 @@ fun main() {
 
 #### Convert to Map
 
-To convert an array to a `Map`, use the [`.toMap()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/to-map.html)
+To convert an array to a `Map`, use the [`.toMap()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/to-map.html)
 function.
 
-Only an array of [`Pair<K,V>`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-pair/) can be converted to a `Map`.
+Only an array of [`Pair<K,V>`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-pair/) can be converted to a `Map`.
 The first value of a `Pair` instance becomes a key, and the second becomes a value. This example uses the [infix notation](functions.md#infix-notation)
-to call the [`to`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/to.html) function to create tuples of `Pair`:
+to call the [`to`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/to.html) function to create tuples of `Pair`:
 
 ```kotlin
 fun main() {
@@ -343,14 +343,14 @@ side effect of boxing overhead:
 
 | Primitive-type array | Equivalent in Java |
 |---|----------------|
-| [`BooleanArray`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean-array/) | `boolean[]`|
-| [`ByteArray`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/) | `byte[]`|
-| [`CharArray`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char-array/) | `char[]`|
-| [`DoubleArray`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double-array/) | `double[]`|
-| [`FloatArray`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float-array/) | `float[]`|
-| [`IntArray`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int-array/) | `int[]`|
-| [`LongArray`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long-array/) | `long[]`|
-| [`ShortArray`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-short-array/) | `short[]`|
+| [`BooleanArray`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean-array/) | `boolean[]`|
+| [`ByteArray`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-byte-array/) | `byte[]`|
+| [`CharArray`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-char-array/) | `char[]`|
+| [`DoubleArray`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-double-array/) | `double[]`|
+| [`FloatArray`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-float-array/) | `float[]`|
+| [`IntArray`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int-array/) | `int[]`|
+| [`LongArray`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long-array/) | `long[]`|
+| [`ShortArray`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-short-array/) | `short[]`|
 
 These classes have no inheritance relation to the `Array` class, but they have the same set of functions and properties.
 

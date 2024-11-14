@@ -175,7 +175,7 @@ For the assignment operations, for example `a += b`, the compiler performs the f
 | `a == b` | `a?.equals(b) ?: (b === null)` |
 | `a != b` | `!(a?.equals(b) ?: (b === null))` |
 
-These operators only work with the function [`equals(other: Any?): Boolean`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/equals.html), 
+These operators only work with the function [`equals(other: Any?): Boolean`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/equals.html), 
 which can be overridden to provide custom equality check implementation. Any other function with the same name (like `equals(other: Foo)`) will not be called.
 
 > `===` and `!==` (identity checks) are not overloadable, so no conventions exist for them.

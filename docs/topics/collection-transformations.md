@@ -7,10 +7,10 @@ In this page, we'll give an overview of the available collection transformation 
 ## Map
 
 The _mapping_ transformation creates a collection from the results of a function on the elements of another collection.
-The basic mapping function is [`map()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map.html).
+The basic mapping function is [`map()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/map.html).
 It applies the given lambda function to each subsequent element and returns the list of the lambda results.
 The order of results is the same as the original order of elements. 
-To apply a transformation that additionally uses the element index as an argument, use [`mapIndexed()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map-indexed.html).  
+To apply a transformation that additionally uses the element index as an argument, use [`mapIndexed()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/map-indexed.html).  
 
 ```kotlin
 
@@ -25,8 +25,8 @@ fun main() {
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3"}
 
 If the transformation produces `null` on certain elements, you can filter out the `null`s from the result collection by
-calling the [`mapNotNull()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map-not-null.html) function
-instead of `map()`, or [`mapIndexedNotNull()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map-indexed-not-null.html)
+calling the [`mapNotNull()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/map-not-null.html) function
+instead of `map()`, or [`mapIndexedNotNull()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/map-indexed-not-null.html)
 instead of `mapIndexed()`.
 
 ```kotlin
@@ -42,8 +42,8 @@ fun main() {
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3"}
 
 When transforming maps, you have two options: transform keys leaving values unchanged and vice versa.
-To apply a given transformation to keys, use [`mapKeys()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map-keys.html);
-in turn, [`mapValues()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/map-values.html) transforms values.
+To apply a given transformation to keys, use [`mapKeys()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/map-keys.html);
+in turn, [`mapValues()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/map-values.html) transforms values.
 Both functions use the transformations that take a map entry as an argument, so you can operate both its key and value.
 
 ```kotlin
@@ -61,7 +61,7 @@ fun main() {
 ## Zip
 
 _Zipping_ transformation is building pairs from elements with the same positions in both collections.
-In the Kotlin standard library, this is done by the [`zip()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/zip.html)
+In the Kotlin standard library, this is done by the [`zip()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/zip.html)
 extension function.
 
 When called on a collection or an array with another collection (or array) as an argument, `zip()` returns the `List` of 
@@ -110,7 +110,7 @@ pairs:
 * The first list contains the first elements of each `Pair` in the original list. 
 * The second list contains the second elements.
 
-To unzip a list of pairs, call [`unzip()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/unzip.html).
+To unzip a list of pairs, call [`unzip()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/unzip.html).
 
 ```kotlin
 
@@ -128,7 +128,7 @@ fun main() {
 _Association_ transformations allow building maps from the collection elements and certain values associated with them.
 In different association types, the elements can be either keys or values in the association map.
 
-The basic association function [`associateWith()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/associate-with.html)
+The basic association function [`associateWith()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/associate-with.html)
 creates a `Map` in which the elements of the original collection are keys, and values are produced from them by the given
 transformation function. If two elements are equal, only the last one remains in the map.
 
@@ -143,7 +143,7 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3"}
 
-For building maps with collection elements as values, there is the function [`associateBy()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/associate-by.html).
+For building maps with collection elements as values, there is the function [`associateBy()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/associate-by.html).
 It takes a function that returns a key based on an element's value. If two elements' keys are equal, only the last one remains
 in the map.
 
@@ -162,7 +162,7 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3"}
 
-Another way to build maps in which both keys and values are somehow produced from collection elements is the function [`associate()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/associate.html). 
+Another way to build maps in which both keys and values are somehow produced from collection elements is the function [`associate()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/associate.html). 
 It takes a lambda function that returns a `Pair`: the key and the value of the corresponding map entry.
 
 Note that `associate()` produces short-living `Pair` objects which may affect the performance.
@@ -197,7 +197,7 @@ Here we call a transform function on an element first, and then build a pair fro
 If you operate nested collections, you may find the standard library functions that provide flat access to nested collection
 elements useful.
 
-The first function is [`flatten()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/flatten.html).
+The first function is [`flatten()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/flatten.html).
 You can call it on a collection of collections, for example, a `List` of `Set`s.
 The function returns a single `List` of all the elements of the nested collections.
 
@@ -212,7 +212,7 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3"}
 
-Another function – [`flatMap()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/flat-map.html) provides
+Another function – [`flatMap()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/flat-map.html) provides
 a flexible way to process nested collections. It takes a function that maps a collection element to another collection.
 As a result, `flatMap()` returns a single list of its return values on all the elements.
 So, `flatMap()` behaves as a subsequent call of `map()` (with a collection as a mapping result) and `flatten()`.
@@ -238,11 +238,11 @@ fun main() {
 ## String representation
 
 If you need to retrieve the collection content in a readable format, use functions that transform the collections to
-strings: [`joinToString()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/join-to-string.html) and
-[`joinTo()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/join-to.html).
+strings: [`joinToString()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/join-to-string.html) and
+[`joinTo()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/join-to.html).
 
 `joinToString()` builds a single `String` from the collection elements based on the provided arguments.
-`joinTo()` does the same but appends the result to the given [`Appendable`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/-appendable/index.html) object.
+`joinTo()` does the same but appends the result to the given [`Appendable`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.text/-appendable/) object.
 
 When called with the default arguments, the functions return the result similar to calling `toString()` on the collection:
 a `String` of elements' string representations separated by commas with spaces. 

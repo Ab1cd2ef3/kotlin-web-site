@@ -6,7 +6,7 @@ specifying the result size, and others.
 
 ## Slice
 
-[`slice()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/slice.html) returns a list of the collection
+[`slice()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/slice.html) returns a list of the collection
 elements with given indices. The indices may be passed either as a [range](ranges.md) or as a collection of integer values. 
 
 ```kotlin
@@ -24,12 +24,12 @@ fun main() {
 
 ## Take and drop
 
-To get the specified number of elements starting from the first, use the [`take()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/take.html) function.
-For getting the last elements, use [`takeLast()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/take-last.html).
+To get the specified number of elements starting from the first, use the [`take()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/take.html) function.
+For getting the last elements, use [`takeLast()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/take-last.html).
 When called with a number larger than the collection size, both functions return the whole collection.  
 
-To take all the elements except a given number of first or last elements, call the [`drop()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/drop.html)
-and [`dropLast()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/drop-last.html) functions respectively. 
+To take all the elements except a given number of first or last elements, call the [`drop()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/drop.html)
+and [`dropLast()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/drop-last.html) functions respectively. 
 
 ```kotlin
 
@@ -48,10 +48,10 @@ fun main() {
 You can also use predicates to define the number of elements for taking or dropping.
 There are four functions similar to the ones described above:
 
-* [`takeWhile()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/take-while.html) is `take()` with a predicate: it takes the elements up to but excluding the first one not matching the predicate. If the first collection element doesn't match the predicate, the result is empty.
-* [`takeLastWhile()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/take-last-while.html) is similar to `takeLast()`: it takes the range of elements matching the predicate from the end of the collection. The first element of the range is the element next to the last element not matching the predicate. If the last collection element doesn't match the predicate, the result is empty;
-* [`dropWhile()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/drop-while.html) is the opposite to `takeWhile()` with the same predicate: it returns the elements from the first one not matching the predicate to the end.
-* [`dropLastWhile()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/drop-last-while.html) is the opposite to `takeLastWhile()` with the same predicate: it returns the elements from the beginning to the last one not matching the predicate.
+* [`takeWhile()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/take-while.html) is `take()` with a predicate: it takes the elements up to but excluding the first one not matching the predicate. If the first collection element doesn't match the predicate, the result is empty.
+* [`takeLastWhile()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/take-last-while.html) is similar to `takeLast()`: it takes the range of elements matching the predicate from the end of the collection. The first element of the range is the element next to the last element not matching the predicate. If the last collection element doesn't match the predicate, the result is empty;
+* [`dropWhile()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/drop-while.html) is the opposite to `takeWhile()` with the same predicate: it returns the elements from the first one not matching the predicate to the end.
+* [`dropLastWhile()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/drop-last-while.html) is the opposite to `takeLastWhile()` with the same predicate: it returns the elements from the beginning to the last one not matching the predicate.
 
 ```kotlin
 
@@ -69,7 +69,7 @@ fun main() {
 
 ## Chunked
 
-To break a collection into parts of a given size, use the [`chunked()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/chunked.html) function.
+To break a collection into parts of a given size, use the [`chunked()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/chunked.html) function.
 `chunked()` takes a single argument – the size of the chunk – and returns a `List` of `List`s of the given size.
 The first chunk starts from the first element and contains the `size` elements, the second chunk holds the next `size` elements,
 and so on. The last chunk may have a smaller size. 
@@ -104,7 +104,7 @@ fun main() {
 ## Windowed
 
 You can retrieve all possible ranges of the collection elements of a given size.
-The function for getting them is called [`windowed()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/windowed.html):
+The function for getting them is called [`windowed()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/windowed.html):
 it returns a list of element ranges that you would see if you were looking at the collection through a sliding window of the given size.
 Unlike `chunked()`,  `windowed()` returns element ranges (_windows_) starting from *each* collection element.
 All the windows are returned as elements of a single `List`.
@@ -140,7 +140,7 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3"}
 
-To build two-element windows, there is a separate function - [`zipWithNext()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/zip-with-next.html).
+To build two-element windows, there is a separate function - [`zipWithNext()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/zip-with-next.html).
 It creates pairs of adjacent elements of the receiver collection.
 Note that `zipWithNext()` doesn't break the collection into pairs; it creates a `Pair` for _each_ element except the last
 one, so its result on `[1, 2, 3, 4]` is `[[1, 2], [2, 3], [3, 4]]`, not `[[1, 2`], `[3, 4]]`.

@@ -1,6 +1,6 @@
 [//]: # (title: Plus and minus operators)
 
-In Kotlin, [`plus`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/plus.html) (`+`) and [`minus`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/minus.html)
+In Kotlin, [`plus`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/plus.html) (`+`) and [`minus`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/minus.html)
 (`-`) operators are defined for collections.
 They take a collection as the first operand; the second operand can be either an element or another collection.
 The return value is a new read-only collection:
@@ -25,8 +25,8 @@ fun main() {
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3"}
 
 For the details on `plus` and `minus` operators for maps, see [Map specific operations](map-operations.md).
-The [augmented assignment operators](operator-overloading.md#augmented-assignments) [`plusAssign`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/plus-assign.html)
-(`+=`) and [`minusAssign`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/minus-assign.html) (`-=`) are
+The [augmented assignment operators](operator-overloading.md#augmented-assignments) [`plusAssign`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/plus-assign.html)
+(`+=`) and [`minusAssign`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/minus-assign.html) (`-=`) are
 also defined for collections. However, for read-only collections, they actually use the `plus` or `minus` operators and
 try to assign the result to the same variable. Thus, they are available only on `var` read-only collections.
 For mutable collections, they modify the collection if it's a `val`. For more details see [Collection write operations](collection-write.md).

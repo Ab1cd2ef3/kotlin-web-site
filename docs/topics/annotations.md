@@ -8,14 +8,14 @@ annotation class Fancy
 
 Additional attributes of the annotation can be specified by annotating the annotation class with meta-annotations:
 
-  * [`@Target`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.annotation/-target/index.html) specifies the possible kinds of
+  * [`@Target`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-target/) specifies the possible kinds of
     elements which can be annotated with the annotation (such as classes, functions, properties, and expressions);
-  * [`@Retention`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.annotation/-retention/index.html) specifies whether the
+  * [`@Retention`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-retention/) specifies whether the
     annotation is stored in the compiled class files and whether it's visible through reflection at runtime
     (by default, both are true);
-  * [`@Repeatable`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.annotation/-repeatable/index.html) allows using the same annotation
+  * [`@Repeatable`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-repeatable/) allows using the same annotation
     on a single element multiple times;
-  * [`@MustBeDocumented`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.annotation/-must-be-documented/index.html) specifies that the
+  * [`@MustBeDocumented`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-must-be-documented/) specifies that the
     annotation is part of the public API and should be included in the class or method signature shown in the
     generated API documentation.
 
@@ -89,7 +89,7 @@ annotation class Deprecated(
 ```
 
 If you need to specify a class as an argument of an annotation, use a Kotlin class
-([KClass](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect/-k-class/index.html)). The Kotlin compiler will
+([KClass](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.reflect/-k-class/)). The Kotlin compiler will
 automatically convert it to a Java class, so that the Java code can access the annotations and arguments
 normally.
 
@@ -304,7 +304,7 @@ To avoid generating the `TYPE_USE` and `TYPE_PARAMETER` annotation targets, use 
 
 Just like [in Java](https://docs.oracle.com/javase/tutorial/java/annotations/repeating.html), Kotlin has repeatable annotations,
 which can be applied to a single code element multiple times. To make your annotation repeatable, mark its declaration
-with the [`@kotlin.annotation.Repeatable`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.annotation/-repeatable/)
+with the [`@kotlin.annotation.Repeatable`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.annotation/-repeatable/)
 meta-annotation. This will make it repeatable both in Kotlin and Java. Java repeatable annotations are also supported
 from the Kotlin side.
 
@@ -320,7 +320,7 @@ annotation class Tag(val name: String)
 ```
 
 You can set a custom name for a containing annotation by applying the
-[`@kotlin.jvm.JvmRepeatable`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvmrepeatable/) meta-annotation
+[`@kotlin.jvm.JvmRepeatable`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.jvm/-jvm-repeatable/) meta-annotation
 and passing an explicitly declared containing annotation class as an argument:
 
 ```kotlin
@@ -330,7 +330,7 @@ annotation class Tag(val name: String)
 annotation class Tags(val value: Array<Tag>)
 ```
 
-To extract Kotlin or Java repeatable annotations via reflection, use the [`KAnnotatedElement.findAnnotations()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect.full/find-annotations.html)
+To extract Kotlin or Java repeatable annotations via reflection, use the [`KAnnotatedElement.findAnnotations()`](https://kotlinlang.org/api/core/kotlin-reflect/kotlin.reflect.full/find-annotations.html)
 function.
 
 Learn more about Kotlin repeatable annotations in [this KEEP](https://github.com/Kotlin/KEEP/blob/master/proposals/repeatable-annotations.md).

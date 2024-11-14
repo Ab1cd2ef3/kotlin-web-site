@@ -10,7 +10,7 @@ collections. To operate the filtering result, you should assign it to a variable
 
 ## Filter by predicate
 
-The basic filtering function is [`filter()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter.html).
+The basic filtering function is [`filter()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/filter.html).
 When called with a predicate, `filter()` returns the collection elements that match it.
 For both `List` and `Set`, the resulting collection is a `List`, for `Map` it's a `Map` as well.
 
@@ -30,10 +30,10 @@ fun main() {
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3"}
 
 The predicates in `filter()` can only check the values of the elements.
-If you want to use element positions in the filter, use [`filterIndexed()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter-indexed.html).
+If you want to use element positions in the filter, use [`filterIndexed()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/filter-indexed.html).
 It takes a predicate with two arguments: the index and the value of an element. 
 
-To filter collections by negative conditions, use [`filterNot()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter-not.html).
+To filter collections by negative conditions, use [`filterNot()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/filter-not.html).
 It returns a list of elements for which the predicate yields `false`.
 
 ```kotlin
@@ -53,7 +53,7 @@ fun main() {
 
 There are also functions that narrow the element type by filtering elements of a given type:
 
-* [`filterIsInstance()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter-is-instance.html) returns
+* [`filterIsInstance()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/filter-is-instance.html) returns
     collection elements of a given type. Being called on a `List<Any>`, `filterIsInstance<T>()` returns a `List<T>`, thus
     allowing you to call functions of the  `T` type on its items.
 
@@ -70,7 +70,7 @@ There are also functions that narrow the element type by filtering elements of a
     ```
     {kotlin-runnable="true" kotlin-min-compiler-version="1.3"}
 
-* [`filterNotNull()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/filter-not-null.html) returns all
+* [`filterNotNull()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/filter-not-null.html) returns all
     non-nullable elements. Being called on a `List<T?>`, `filterNotNull()` returns a `List<T: Any>`, thus allowing you to treat
     the elements as non-nullable objects.
 
@@ -88,7 +88,7 @@ There are also functions that narrow the element type by filtering elements of a
 
 ## Partition
 
-Another filtering function – [`partition()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/partition.html)
+Another filtering function – [`partition()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/partition.html)
 – filters a collection by a predicate and keeps the elements that don't match it in a separate list.
 So, you have a `Pair` of `List`s as a return value: the first list containing elements that match the predicate and the
 second one containing everything else from the original collection.
@@ -110,9 +110,9 @@ fun main() {
 
 Finally, there are functions that simply test a predicate against collection elements:
 
-* [`any()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/any.html) returns `true` if at least one element matches the given predicate.
-* [`none()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/none.html) returns `true` if none of the elements match the given predicate.
-* [`all()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/all.html) returns `true` if all elements match the given predicate.
+* [`any()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/any.html) returns `true` if at least one element matches the given predicate.
+* [`none()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/none.html) returns `true` if none of the elements match the given predicate.
+* [`all()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/all.html) returns `true` if all elements match the given predicate.
     Note that `all()` returns `true` when called with any valid predicate on an empty collection. Such behavior is known in logic as _[vacuous truth](https://en.wikipedia.org/wiki/Vacuous_truth)_.
 
 ```kotlin

@@ -3,9 +3,9 @@
 The Kotlin standard library contains several functions whose sole purpose is to execute a block of code within the context
 of an object. When you call such a function on an object with a [lambda expression](lambdas.md) provided, it forms a
 temporary scope. In this scope, you can access the object without its name. Such functions are called _scope functions_.
-There are five of them: [`let`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/let.html), [`run`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/run.html)
-, [`with`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/with.html), [`apply`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/apply.html)
-, and [`also`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/also.html).
+There are five of them: [`let`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/let.html), [`run`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/run.html)
+, [`with`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/with.html), [`apply`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/apply.html)
+, and [`also`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/also.html).
 
 Basically, these functions all perform the same action: execute a block of code on an object. What's different is how 
 this object becomes available inside the block and what the result of the whole expression is.
@@ -64,12 +64,12 @@ between them.
 
 | Function |Object reference|Return value|Is extension function|
 |---|---|---|---|
-| [`let`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/let.html) |`it`|Lambda result|Yes|
-| [`run`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/run.html) |`this`|Lambda result|Yes|
-| [`run`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/run.html) |-|Lambda result|No: called without the context object|
-| [`with`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/with.html) |`this`|Lambda result|No: takes the context object as an argument.|
-| [`apply`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/apply.html) |`this`|Context object|Yes|
-| [`also`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/also.html) |`it`|Context object|Yes|
+| [`let`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/let.html) |`it`|Lambda result|Yes|
+| [`run`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/run.html) |`this`|Lambda result|Yes|
+| [`run`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/run.html) |-|Lambda result|No: called without the context object|
+| [`with`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/with.html) |`this`|Lambda result|No: takes the context object as an argument.|
+| [`apply`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/apply.html) |`this`|Context object|Yes|
+| [`also`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/also.html) |`it`|Context object|Yes|
 
 Detailed information about these functions is provided in the dedicated sections below.
 
@@ -304,7 +304,7 @@ conventions for using them.
 - **The context object** is available as an argument (`it`).
 - **The return value** is the lambda result.
 
-[`let`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/let.html) can be used to invoke one or more functions on 
+[`let`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/let.html) can be used to invoke one or more functions on 
 results of call chains. For example, the following code prints the results of two operations on a collection:
 
 ```kotlin
@@ -390,7 +390,7 @@ fun main() {
 - **The context object** is available as a receiver (`this`).
 - **The return value** is the lambda result.
 
-As [`with`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/with.html) is not an extension function: the context
+As [`with`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/with.html) is not an extension function: the context
 object is passed as an argument, but inside the lambda, it's available as a receiver (`this`).
 
 We recommend using `with` for calling functions on the context object when you don't need to use the returned result.
@@ -430,7 +430,7 @@ fun main() {
 - **The context object** is available as a receiver (`this`). 
 - **The return value** is the lambda result.
 
-[`run`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/run.html) does the same as `with` but it is implemented as 
+[`run`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/run.html) does the same as `with` but it is implemented as 
 an extension function. So like `let`, you can call it on the context object using dot notation.
 
 `run` is useful when your lambda both initializes objects and computes the return value.
@@ -490,7 +490,7 @@ fun main() {
 - **The context object** is available as a receiver (`this`). 
 - **The return value** is the object itself.
 
-As [`apply`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/apply.html) returns the context object itself, we 
+As [`apply`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/apply.html) returns the context object itself, we 
 recommend that you use it for code blocks that don't return a value and that mainly operate on the members of the 
 receiver object. The most common use case for `apply` is for object configuration. Such calls can be read as "_apply 
 the following assignments to the object._"
@@ -517,7 +517,7 @@ Another use case for `apply` is to include `apply` in multiple call chains for m
 - **The context object** is available as an argument (`it`). 
 - **The return value** is the object itself.
 
-[`also`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/also.html) is useful for performing some actions that take 
+[`also`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/also.html) is useful for performing some actions that take 
 the context object as an argument. Use `also` for actions that need a reference to the object rather than its properties
 and functions, or when you don't want to shadow the `this` reference from an outer scope.
 
@@ -537,8 +537,8 @@ fun main() {
 
 ## takeIf and takeUnless
 
-In addition to scope functions, the standard library contains the functions [`takeIf`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/take-if.html) 
-and [`takeUnless`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/take-unless.html). These functions let you embed
+In addition to scope functions, the standard library contains the functions [`takeIf`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/take-if.html) 
+and [`takeUnless`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/take-unless.html). These functions let you embed
 checks of an object's state in call chains. 
 
 When called on an object along with a predicate, `takeIf` returns this object if it satisfies the given predicate.

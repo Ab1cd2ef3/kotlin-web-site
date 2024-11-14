@@ -239,7 +239,7 @@ result brings unification across platforms:
 
 ### Support for all Unicode digits in Char.digitToInt() in Kotlin/Native and Kotlin/JS
 
-[`Char.digitToInt()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/digit-to-int.html) returns the numeric
+[`Char.digitToInt()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.text/digit-to-int.html) returns the numeric
 value of the decimal digit that the character represents. Before 1.5.20, the function supported all Unicode digit characters
 only for Kotlin/JVM: implementations on the Native and JS platforms supported only ASCII digits.
 
@@ -259,8 +259,8 @@ fun main() {
 
 ### Unification of Char.isLowerCase()/isUpperCase() implementations across platforms
 
-The functions [`Char.isUpperCase()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/is-upper-case.html) and
-[`Char.isLowerCase()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/is-lower-case.html) return a boolean value
+The functions [`Char.isUpperCase()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.text/is-upper-case.html) and
+[`Char.isLowerCase()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.text/is-lower-case.html) return a boolean value
 depending on the case of the character. For Kotlin/JVM, the implementation checks both the `General_Category` and the
 `Other_Uppercase`/`Other_Lowercase` [Unicode properties](https://en.wikipedia.org/wiki/Unicode_character_property).
 

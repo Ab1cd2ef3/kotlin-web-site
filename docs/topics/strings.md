@@ -1,6 +1,6 @@
 [//]: # (title: Strings)
 
-Strings in Kotlin are represented by the type [`String`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/). 
+Strings in Kotlin are represented by the type [`String`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/). 
 
 > On the JVM, an object of `String` type in UTF-16 encoding uses approximately 2 bytes per character.
 > 
@@ -95,7 +95,7 @@ val text = """
 """
 ```
 
-To remove leading whitespace from multiline strings, use the [`trimMargin()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/trim-margin.html) function:
+To remove leading whitespace from multiline strings, use the [`trimMargin()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.text/trim-margin.html) function:
 
 ```kotlin
 val text = """
@@ -160,7 +160,7 @@ ${'$'}_9.99
 >
 {style="note"}
 
-To format a string to your specific requirements, use the [`String.format()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/format.html) 
+To format a string to your specific requirements, use the [`String.format()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.text/format.html) 
 function. 
 
 The `String.format()` function accepts a format string and one or more arguments. The format string contains one placeholder 

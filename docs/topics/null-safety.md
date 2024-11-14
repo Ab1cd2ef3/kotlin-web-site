@@ -16,7 +16,7 @@ This feature improves code robustness, readability, and maintainability by expli
 
 The only possible causes of an NPE in Kotlin are:
 
-* An explicit call to [`throw NullPointerException()`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-null-pointer-exception/).
+* An explicit call to [`throw NullPointerException()`](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-null-pointer-exception/).
 * Usage of the [not-null assertion operator `!!`](#not-null-assertion-operator).
 * Data inconsistency during initialization, such as when:
   * An uninitialized `this` available in a constructor is used somewhere else ([a "leaking `this`"](https://youtrack.jetbrains.com/issue/KTIJ-9751)).
