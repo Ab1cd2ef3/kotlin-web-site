@@ -9,7 +9,7 @@ object BuildStdlibApiReference : BuildType({
   name = "Core API reference"
 
   artifactRules = """
-      +:content/** => latest-version.zip
+      +:dist/api/core/** => latest-version.zip!all-libs/
       +:pages.json => ./
   """.trimIndent()
 
@@ -18,16 +18,23 @@ object BuildStdlibApiReference : BuildType({
           name = "Drop unnecessary files"
           // language=bash
           scriptContent = """
-              ls -la ./
-              ls -la ./content/
-              ls -la ./content/all-libs/
-
-              rm ./content/all-libs/not-found-version.html
+              rm ./dist/api/core/not-found-version.html
               
               # empty pages.json
-              mv ./content/all-libs/scripts/pages.json ./
-              echo "[]" > ./content/all-libs/scripts/pages.json
+              mv ./dist/api/core/scripts/pages.json ./
+              echo "[]" > ./dist/api/core/scripts/pages.json
           """.trimIndent()
+      }
+      script {
+          name = "Add no robots for older versions"
+          workingDir = "dist/"
+          //language=bash
+          scriptContent = """
+#!/bin/sh
+set -x
+find . -type f -path "*/api/*/older/*.html" -exec sed -i -E 's/(<head[^>]*>)/\1<meta name="robots" content="noindex, nofollow">/g' {} \;
+          """.trimIndent()
+          dockerImage = "alpine"
       }
   }
 
@@ -39,7 +46,7 @@ object BuildStdlibApiReference : BuildType({
                   +:*
               """.trimIndent())
               cleanDestination = true
-              artifactRules = "+:latest-version.zip!** => content/"
+              artifactRules = "latest-version.zip!all-libs/** => dist/api/core/"
           }
     }
   }

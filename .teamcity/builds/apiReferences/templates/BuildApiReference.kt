@@ -47,6 +47,22 @@ fun BuildSteps.buildDokkaHTML(block: GradleBuildStep.() -> Unit) = step(
     }.apply(block),
 )
 
+private fun BuildSteps.addNoRobots(block: ScriptBuildStep.() -> Unit) = step(
+    ScriptBuildStep {
+        name = "Add no robots for older versions"
+        //language=bash
+        scriptContent = """
+              #!/bin/sh
+              FILES=${'$'}(find . -type f -name "*.html" | grep -E "/api/([^]]+)/older/")
+              
+              for FILE in ${"$"}FILES; do
+                  echo "add norobots ${"$"}FILE"
+                  sed -E 's/(<head[^>]*>)/\1<meta name="robots" content="noindex, nofollow">/g' "${"$"}FILES"
+              done
+          """.trimIndent()
+    }.apply(block)
+)
+
 fun Triggers.vcsDefaultTrigger(block: Trigger.() -> Unit) = trigger(
     VcsTrigger {
         id = "trigger-vcs-default-trigger-id"
@@ -75,5 +91,6 @@ object BuildApiReference : Template({
         scriptDropSnapshot {}
         scriptDokkaVersionSync {}
         buildDokkaHTML {}
+        addNoRobots {}
     }
 })
