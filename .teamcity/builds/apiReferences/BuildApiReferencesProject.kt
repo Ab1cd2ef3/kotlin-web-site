@@ -16,10 +16,8 @@ import builds.apiReferences.kotlinx.serialization.KotlinxSerializationBuildApiRe
 import builds.apiReferences.kotlinx.serialization.KotlinxSerializationBuildSearchIndex
 import builds.apiReferences.kotlinx.serialization.KotlinxSerializationPrepareDokkaTemplates
 import builds.apiReferences.stdlib.BuildStdlibApiReference
-import builds.apiReferences.stdlib.StdlibBuildSearchIndex
 import builds.apiReferences.stdlib.StdlibPrepareDokkaTemplates
 import builds.apiReferences.templates.BuildApiReference
-import builds.apiReferences.templates.BuildApiReferenceSearchIndex
 import builds.apiReferences.templates.PrepareDokkaTemplate
 import builds.apiReferences.vcsRoots.*
 import jetbrains.buildServer.configs.kotlin.Project
@@ -49,7 +47,6 @@ object BuildApiReferencesProject : Project({
     buildType(KotlinxMetadataJvmPrepareDokkaTemplates)
 
     buildType(BuildStdlibApiReference)
-    buildType(StdlibBuildSearchIndex)
     buildType(StdlibPrepareDokkaTemplates)
 
     vcsRoot(KotlinxSerialization)
@@ -60,5 +57,4 @@ object BuildApiReferencesProject : Project({
 
     template(PrepareDokkaTemplate)
     template(BuildApiReference)
-    template(BuildApiReferenceSearchIndex)
 })

@@ -1,14 +1,11 @@
 package builds.apiReferences.kotlinx.coroutines
 
 import BuildParams.KOTLINX_COROUTINES_ID
-import builds.apiReferences.templates.BuildApiReferenceSearchIndex
-import jetbrains.buildServer.configs.kotlin.BuildType
+import builds.TemplateSearchIndex
 
-object KotlinxCoroutinesBuildSearchIndex : BuildType({
+object KotlinxCoroutinesBuildSearchIndex : TemplateSearchIndex({
     name = "$KOTLINX_COROUTINES_ID search"
     description = "Build search index for Kotlinx Coroutines"
-
-    templates(BuildApiReferenceSearchIndex)
 
     params {
         param("env.ALGOLIA_INDEX_NAME", "$KOTLINX_COROUTINES_ID-stage")

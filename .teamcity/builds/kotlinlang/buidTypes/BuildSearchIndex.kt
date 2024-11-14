@@ -1,17 +1,14 @@
 package builds.kotlinlang.buidTypes
 
 import BuildParams.SEARCH_INDEX_NAME
+import builds.TemplateSearchIndex
 import builds.apiReferences.stdlib.BuildStdlibApiReference
-import builds.apiReferences.templates.BuildApiReferenceSearchIndex
-import jetbrains.buildServer.configs.kotlin.BuildType
 import jetbrains.buildServer.configs.kotlin.triggers.schedule
 import vcsRoots.KotlinLangOrg
 
-object BuildSearchIndex : BuildType({
+object BuildSearchIndex : TemplateSearchIndex({
     name = "kotlinlang.org search"
     description = "Build search index for kotlinlang.org"
-
-    templates(BuildApiReferenceSearchIndex)
 
     params {
         param("env.ALGOLIA_INDEX_NAME", SEARCH_INDEX_NAME)

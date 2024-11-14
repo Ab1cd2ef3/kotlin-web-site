@@ -1,15 +1,12 @@
-package builds.apiReferences.templates
+package builds
 
 import BuildParams.SEARCH_APP_ID
 import builds.kotlinlang.buidTypes.PageViews
-import jetbrains.buildServer.configs.kotlin.Template
+import jetbrains.buildServer.configs.kotlin.BuildType
 import jetbrains.buildServer.configs.kotlin.buildSteps.script
 import vcsRoots.KotlinLangOrg
 
-object BuildApiReferenceSearchIndex : Template({
-    name = "Site Search Index"
-    description = "Template for make search index for Algolia using Google Analytics data"
-
+open class TemplateSearchIndex(init: BuildType.() -> Unit) : BuildType({
     artifactRules = """
         search-report/** => search-report.zip
     """.trimIndent()
@@ -61,4 +58,6 @@ object BuildApiReferenceSearchIndex : Template({
             }
         }
     }
+
+    init()
 })

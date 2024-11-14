@@ -1,14 +1,11 @@
 package builds.apiReferences.kotlinx.datetime
 
 import BuildParams.KOTLINX_DATETIME_ID
-import builds.apiReferences.templates.BuildApiReferenceSearchIndex
-import jetbrains.buildServer.configs.kotlin.BuildType
+import builds.TemplateSearchIndex
 
-object KotlinxDatetimeBuildSearchIndex : BuildType({
+object KotlinxDatetimeBuildSearchIndex : TemplateSearchIndex({
     name = "$KOTLINX_DATETIME_ID search"
     description = "Build search index for Kotlinx Datetime"
-
-    templates(BuildApiReferenceSearchIndex)
 
     params {
         param("env.ALGOLIA_INDEX_NAME", "$KOTLINX_DATETIME_ID-stage")
