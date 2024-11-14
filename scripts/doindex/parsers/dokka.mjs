@@ -19,9 +19,16 @@ function dropBreadcrumbs($, article) {
 
     const first = breadcrumbs?.[0];
 
-    if (first === 'kotlin-stdlib' || first === 'kotlin-test' || first === 'kotlin-reflect' || (
-        process.env.ALGOLIA_INDEX_NAME && first === process.env.ALGOLIA_INDEX_NAME ))
+    if (first === 'kotlin-stdlib' || first === 'kotlin-test' || first === 'kotlin-reflect')
         breadcrumbs.shift();
+
+    const libraryPrefix = process.env.ALGOLIA_INDEX_NAME?.replace(/-stag(e|ing)$/, '');
+
+    if (libraryPrefix) {
+        while (breadcrumbs[0] === libraryPrefix) {
+            breadcrumbs.shift();
+        }
+    }
 
     return breadcrumbs;
 }
@@ -190,7 +197,7 @@ async function apiReference($, url, data) {
         // special for platform like:
         //   "/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/[js]as-promise.html"
         const platform = basename(url).match(/^\[([a-zA-Z-]+)].+/)?.[1]?.trim();
-        if(platform && platform !== 'common') title += ' (' + platform + ')';
+        if (platform && platform !== 'common') title += ' (' + platform + ')';
     }
 
     if (!content) {
