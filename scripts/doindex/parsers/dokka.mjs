@@ -1,3 +1,4 @@
+import { basename } from 'node:path';
 import levenshtein from 'fast-levenshtein';
 
 import { DEFAULT_RECORD, htmlToText } from '../lib/parser.mjs';
@@ -182,6 +183,13 @@ async function apiReference($, url, data) {
 
     if ($article.is(':has(> .main-content[data-page-type="package"])')) {
         title = $article.find('.breadcrumbs .current').text();
+    }
+
+    if (url.endsWith('.html')) {
+        // special for platform like:
+        //   "/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/[js]as-promise.html"
+        const platform = basename(url).match(/^\[([a-zA-Z-]+)].+/)?.[1]?.trim();
+        if(platform && platform !== 'common') title += ' (' + platform + ')';
     }
 
     if (!content) {
