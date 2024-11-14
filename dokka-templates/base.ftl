@@ -2,7 +2,7 @@
 <#import "includes/header.ftl" as header>
 <#import "includes/footer.ftl" as footer>
 <!DOCTYPE html>
-<html class="no-js">
+<html lang="en-US" class="no-js">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <@page_metadata.display/>
