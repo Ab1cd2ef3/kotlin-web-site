@@ -251,7 +251,6 @@ async function apiReference($, url, data) {
             headings: breadcrumbs.length ? breadcrumbs.reverse().join(' | ') : title,
             mainTitle,
             pageTitle: mainTitle,
-            pageViews: 0,
 
             content
         }
