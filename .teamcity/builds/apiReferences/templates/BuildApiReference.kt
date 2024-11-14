@@ -52,14 +52,9 @@ private fun BuildSteps.addNoRobots(block: ScriptBuildStep.() -> Unit) = step(
         name = "Add no robots for older versions"
         //language=bash
         scriptContent = """
-              #!/bin/sh
-              FILES=${'$'}(find . -type f -name "*.html" | grep -E "/api/([^]]+)/older/")
-              
-              for FILE in ${"$"}FILES; do
-                  echo "add norobots ${"$"}FILE"
-                  sed -E 's/(<head[^>]*>)/\1<meta name="robots" content="noindex, nofollow">/g' "${"$"}FILES"
-              done
-          """.trimIndent()
+            #!/bin/sh
+            find . -type f -path "*/api/*/older/*.html" -exec sed -i -E 's/(<head[^>]*>)/\1<meta name="robots" content="noindex, nofollow">/g' {} \;
+        """.trimIndent()
     }.apply(block)
 )
 

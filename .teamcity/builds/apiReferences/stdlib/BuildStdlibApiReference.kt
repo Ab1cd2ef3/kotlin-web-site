@@ -30,9 +30,8 @@ object BuildStdlibApiReference : BuildType({
           workingDir = "dist/"
           //language=bash
           scriptContent = """
-#!/bin/sh
-set -x
-find . -type f -path "*/api/*/older/*.html" -exec sed -i -E 's/(<head[^>]*>)/\1<meta name="robots" content="noindex, nofollow">/g' {} \;
+              #!/bin/sh
+              find . -type f -path "*/api/*/older/*.html" -exec sed -i -E 's/(<head[^>]*>)/\1<meta name="robots" content="noindex, nofollow">/g' {} \;
           """.trimIndent()
           dockerImage = "alpine"
       }
