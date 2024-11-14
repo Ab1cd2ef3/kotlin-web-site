@@ -19,7 +19,8 @@ function dropBreadcrumbs($, article) {
 
     const first = breadcrumbs?.[0];
 
-    if (first === 'kotlin-stdlib' || first === 'kotlin-test' || first === 'kotlin-reflect')
+    if (first === 'kotlin-stdlib' || first === 'kotlin-test' || first === 'kotlin-reflect' || (
+        process.env.ALGOLIA_INDEX_NAME && first === process.env.ALGOLIA_INDEX_NAME ))
         breadcrumbs.shift();
 
     return breadcrumbs;
