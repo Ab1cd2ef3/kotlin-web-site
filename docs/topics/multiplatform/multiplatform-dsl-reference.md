@@ -53,7 +53,7 @@ Inside `kotlin {}`, you can write the following blocks:
 ## Targets
 
 _Target_ is a part of the build responsible for compiling, testing, and packaging a piece of software aimed at
-one of the supported platforms. Kotlin provides target presets for each platform. See how to [use a target preset](multiplatform-set-up-targets.md).
+one of the supported platforms. Kotlin provides target presets for each platform. See how to [set up a target](multiplatform-discover-project.md#targets).
 
 Each target can have one or more [compilations](#compilations). In addition to default compilations for
 test and production purposes, you can [create custom compilations](multiplatform-configure-compilations.md#create-a-custom-compilation).
@@ -136,7 +136,6 @@ In any target block, you can use the following declarations:
 
 | **Name**            | **Description**                                                                                                                                                                                                                                                                                 | 
 |---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `attributes`        | Attributes used for [disambiguating targets](multiplatform-set-up-targets.md#distinguish-several-targets-for-one-platform) for a single platform.                                                                                                                                               |
 | `preset`            | The preset that the target has been created from, if any.                                                                                                                                                                                                                                       |
 | `platformType`      | Designates the Kotlin platform of this target. Available values: `jvm`, `androidJvm`, `js`, `wasm`, `native`, `common`.                                                                                                                                                                         |
 | `artifactsTaskName` | The name of the task that builds the resulting artifacts of this target.                                                                                                                                                                                                                        |
