@@ -1,6 +1,5 @@
 package builds.apiReferences.templates
 
-import BuildParams
 import jetbrains.buildServer.configs.kotlin.Template
 import jetbrains.buildServer.configs.kotlin.buildSteps.script
 
@@ -13,11 +12,16 @@ object PrepareDokkaTemplate: Template({
   }
 
   params {
-      param("env.ALGOLIA_INDEX_NAME", BuildParams.SEARCH_INDEX_NAME)
+//      param("env.ALGOLIA_INDEX_NAME", "")
   }
 
   vcs {
-    root(vcsRoots.KotlinLangOrg)
+    root(vcsRoots.KotlinLangOrg, """
+      package.json
+      yarn.lock
+      dokka-templates/
+      scripts/dokka/
+    """.trimIndent())
   }
 
   steps {

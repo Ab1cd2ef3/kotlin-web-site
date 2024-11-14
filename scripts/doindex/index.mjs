@@ -126,12 +126,12 @@ async function reportRecords(records) {
             { encoding: 'utf8' }
         ),
 
-        env['WH_INDEX_NAME'] && algoliasearch(env['WH_SEARCH_USER'], env['WH_SEARCH_WRITE_KEY'])
-            .initIndex(env['WH_INDEX_NAME'])
+        env['ALGOLIA_INDEX_NAME'] && algoliasearch(env['WH_SEARCH_USER'], env['WH_SEARCH_WRITE_KEY'])
+            .initIndex(env['ALGOLIA_INDEX_NAME'])
             .replaceAllObjects(records)
             .wait()
             .then(() =>
-                console.log(`Submitting WH index objects to ${env['WH_INDEX_NAME']} index`))
+                console.log(`Submitting Algolia index objects to ${env['ALGOLIA_INDEX_NAME']} index`))
     ]);
 }
 

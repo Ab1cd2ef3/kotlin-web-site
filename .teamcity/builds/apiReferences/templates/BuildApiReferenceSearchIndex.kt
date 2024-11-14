@@ -1,46 +1,64 @@
 package builds.apiReferences.templates
 
+import BuildParams.SEARCH_APP_ID
+import builds.kotlinlang.buidTypes.PageViews
 import jetbrains.buildServer.configs.kotlin.Template
 import jetbrains.buildServer.configs.kotlin.buildSteps.script
+import vcsRoots.KotlinLangOrg
 
 object BuildApiReferenceSearchIndex : Template({
-  name = "Dokka Search Index Template"
+    name = "Site Search Index"
+    description = "Template for make search index for Algolia using Google Analytics data"
 
-  vcs {
-    root(vcsRoots.KotlinLangOrg)
-  }
+    artifactRules = """
+        search-report/** => search-report.zip
+    """.trimIndent()
 
-  steps {
-    script {
-      name = "Install npm dependencies"
-      scriptContent = "yarn install --frozen-lockfile"
-      dockerImage = "node:16-alpine"
+    requirements {
+        doesNotContain("docker.server.osType", "windows")
     }
-    script {
-      name = "Build Search Index"
-      scriptContent = "node ./scripts/search/index.js"
-      dockerImage = "node:16-alpine"
+
+    params {
+        param("env.NODE_OPTIONS", "--max-old-space-size=32768")
+
+        param("env.WH_SEARCH_USER", SEARCH_APP_ID)
+        param("env.WH_SEARCH_WRITE_KEY", "%ALGOLIA_WRITE_API_KEY%")
     }
-  }
 
-  params {
-    param("env.ALGOLIA_APP_ID", "7961PKYRXV")
-    param("env.ALGOLIA_WRITE_API_KEY", "%ALGOLIA_WRITE_API_KEY%")
-    param("env.REFERENCE_INDEX_FILE_PATH", "api-references/pages.json")
-  }
+    vcs {
+        root(
+            KotlinLangOrg, """
+                scripts/doindex
+            """.trimIndent()
+        )
+        cleanCheckout = true
+        showDependenciesChanges = true
+    }
 
-  requirements {
-    doesNotContain("teamcity.agent.name", "windows")
-  }
+    steps {
+        script {
+            name = "Build and push search index"
+            //language=bash
+            scriptContent = """
+                #!/bin/sh
+                set -e
+                npm install
+                node index.mjs
+            """.trimIndent()
+            dockerImage = "node:22-alpine"
+            workingDir = "scripts/doindex/"
+            dockerPull = true
+        }
+    }
 
-//  triggers {
-//    schedule {
-//      schedulingPolicy = cron {
-//        hours = "3"
-//        dayOfMonth = "*/2"
-//      }
-//      branchFilter = "+:<default>"
-//      triggerBuild = always()
-//    }
-//  }
+    dependencies {
+        dependency(PageViews) {
+            snapshot {}
+            artifacts {
+                artifactRules = """
+                    page_views_map.json => data/
+                """.trimIndent()
+            }
+        }
+    }
 })

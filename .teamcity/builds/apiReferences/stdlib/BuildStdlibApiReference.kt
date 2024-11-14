@@ -1,12 +1,13 @@
 package builds.apiReferences.stdlib
 
-import BuildParams.KOTLIN_CORE_API_ID
+import BuildParams.KOTLIN_CORE_API_BUILD_ID
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.BuildType
 import jetbrains.buildServer.configs.kotlin.buildSteps.script
 
 object BuildStdlibApiReference : BuildType({
-  name = "Stdlib Api reference"
+  name = "Core API reference"
+
   artifactRules = """
       +:content/** => latest-version.zip
       +:pages.json => ./
@@ -31,7 +32,7 @@ object BuildStdlibApiReference : BuildType({
   }
 
   dependencies {
-      dependency(AbsoluteId(KOTLIN_CORE_API_ID)) {
+      dependency(AbsoluteId(KOTLIN_CORE_API_BUILD_ID)) {
           artifacts {
               buildRule = tag(tag = "publish", branch = """
                   +:<default>
