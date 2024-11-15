@@ -11,7 +11,6 @@ object BuildParams {
   const val KOTLINX_IO_ID = "kotlinx-io"
   const val KOTLINX_METADATA_ID = "kotlinx-metadata-jvm"
   const val KOTLIN_CORE_API_BUILD_ID = "Kotlin_KotlinRelease_2020_LibraryReferenceLatestDocs"
-  const val KOTLIN_CORE_API_ID = "core"
   const val KOTLIN_RELEASE_TAG = "v2.0.20"
 
   const val SEARCH_APP_ID = "7961PKYRXV"
