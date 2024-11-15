@@ -1,0 +1,16 @@
+{
+  "type": "module",
+  "scripts": {
+    "generate-metadata": "node --loader ts-node/esm metadata/generate.ts"
+  },
+  "dependencies": {
+    "algoliasearch": "^4.24.0",
+    "cheerio": "^1.0.0-rc.12",
+    "fast-levenshtein": "^3.0.0",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "tslib": "^2.8.1"
+  }
+}

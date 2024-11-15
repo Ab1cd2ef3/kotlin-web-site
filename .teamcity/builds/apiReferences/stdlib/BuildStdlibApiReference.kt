@@ -35,6 +35,15 @@ object BuildStdlibApiReference : BuildType({
           """.trimIndent()
           dockerImage = "alpine"
       }
+      script {
+          name = "Generate pages metadata"
+          //language=bash
+          scriptContent = """
+            npm ci
+            node ./metadata.mjs
+          """
+          dockerImage = "node:22-alpine"
+      }
   }
 
   dependencies {
