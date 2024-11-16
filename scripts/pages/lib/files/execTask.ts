@@ -1,7 +1,7 @@
 import { readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { Dirent } from 'node:fs';
-import { newTaskExecutor } from '../pool';
+import { newTaskExecutor } from '../pool.js';
 
 export type Opts = { filePath: string, relativePath: string }
 
@@ -29,9 +29,6 @@ export async function execFilesTask<R>(
         scriptPath, onItem, isFinished
     );
 
-
-    pool.isIdle()
-
     const folders = new Set([rootDir]);
 
     for (const folder of folders.values()) {
@@ -48,7 +45,6 @@ export async function execFilesTask<R>(
                 return;
             }
 
-            console.log('send', relativePath);
             pool.push({ filePath, relativePath });
         }));
     }

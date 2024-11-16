@@ -1,11 +1,11 @@
 import { CheerioAPI } from 'cheerio';
-import { loadFile } from '../html';
+import { loadFile } from '../html.js';
 
 export type FileType =
     'File_Text' | 'File_Pdf' | 'File_Archive' | 'File_Asset'
     | 'File_Font' | 'File_Data' | 'File_License' | 'File_Image'
     | 'Page_Undetected' | 'Page_NotFound' | 'Page_Spec' | 'Page_Grammar'
-    | 'Page_API' | 'Page_API_stdlib' | 'Page_API_test' | 'Page_API_OldVersion'
+    | 'Page_API' | 'Page_API_stdlib' | 'Page_API_test' | 'Page_API_Deprecated'
     | 'Page_Community' | 'Page_Documentation' | 'Page_LegacyDocumentation'
     | 'Iframe' | 'Redirect' | 'Hidden' | 'Unknown';
 
@@ -46,7 +46,7 @@ export async function getType(url: string, filePath: string): Promise<[FileType,
             if (url.startsWith('api/latest/')) pageType = url.includes('jvm/stdlib') ? 'Page_API_stdlib' : 'Page_API_test';
             else if (url.endsWith('/navigation.html') && $(':is(.sideMenu, .sideMenuPart) .sideMenuPart').length)
                 pageType = 'Iframe';
-            else if (url.includes('/older/')) return ['Page_API_OldVersion', $];
+            else if (url.includes('/older/')) return ['Page_API_Deprecated', $];
             else pageType = 'Page_API';
         }
 

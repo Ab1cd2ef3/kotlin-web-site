@@ -1,10 +1,19 @@
 import { availableParallelism as cpuSize, cpus } from 'node:os';
 import { stderr, stdout } from 'node:process';
 import { ChildProcess, fork, Serializable } from 'node:child_process';
-import { createResolve } from './promise';
+import { createResolve } from './promise.js';
 
-type OnResult<T> = (result: T) => Promise<void>
-type Fork = ChildProcess & { waits?: boolean | null }
+type OnResult<T> = (result: T) => Promise<void>;
+
+type ForkStatus = 'init' | 'busy' | 'idle' | 'shutdown';
+type Fork = ChildProcess & { status: ForkStatus };
+
+function createFork(scriptFilename: string) {
+    const instance = fork(scriptFilename, { stdio: 'pipe' }) as Fork;
+    instance.status = 'init';
+    return instance;
+}
+
 type Message<T> = { event: 'inited' } |
     { event: 'log', type: string, data?: T[] } |
     { event: 'result', data: T };
@@ -19,9 +28,7 @@ export class FixedThreadPool<MSG extends Serializable, RESULT> {
         poolSize: number = (cpuSize && cpuSize()) || cpus().length
     ) {
         this.forks = [...new Array(poolSize)].map((_, i) => {
-                const forked: Fork = fork(scriptFilename, { stdio: 'pipe' });
-
-                forked.waits = null;
+                const forked: Fork = createFork(scriptFilename);
 
                 forked.stdout?.pipe(stdout);
                 forked.stderr?.pipe(stderr);
@@ -37,12 +44,14 @@ export class FixedThreadPool<MSG extends Serializable, RESULT> {
                     .on('message', async (msg: Message<RESULT>) => {
                         switch (msg?.event) {
                             case 'inited':
-                                forked.waits = true;
+                                forked.status = 'idle';
+                                // console.log('init #' + i)
                                 this.update();
                                 break;
 
                             case 'result':
-                                forked.waits = true;
+                                forked.status = 'idle';
+                                // console.log('result #' + i)
                                 this.update();
                                 await onResult(msg.data);
                                 break;
@@ -58,7 +67,7 @@ export class FixedThreadPool<MSG extends Serializable, RESULT> {
     }
 
     _idleThread() {
-        return this.forks.find(forked => forked.waits);
+        return this.forks.find(forked => forked.status === 'idle');
     }
 
     push(msg: MSG) {
@@ -75,14 +84,14 @@ export class FixedThreadPool<MSG extends Serializable, RESULT> {
 
     isIdle() {
         return Boolean(!this.messages.length && this.forks.every(forked => (
-            forked.waits === undefined || forked.waits === null || forked.waits
+            forked.status !== 'busy'
         )));
     }
 
     shutdown() {
         this.forks.forEach(forked => {
+            forked.status = 'shutdown';
             forked.kill();
-            forked.waits = false;
         });
         this.forks = [];
         return this;
@@ -93,7 +102,7 @@ export class FixedThreadPool<MSG extends Serializable, RESULT> {
         if (thread) {
             const next = this.messages.pop();
             if (next) {
-                thread.waits = false;
+                thread.status = 'busy';
                 thread.send(next);
             }
         }

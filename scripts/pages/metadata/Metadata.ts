@@ -1,3 +1,3 @@
-import { FileType } from '../lib/files/type';
+import { FileType } from '../lib/files/type.js';
 
-export type Metadata = [string, FileType];
+export type Metadata = [string, { type: FileType }];
