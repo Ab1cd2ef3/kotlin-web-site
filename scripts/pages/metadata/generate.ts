@@ -15,7 +15,7 @@ import {
 
 const ROOT_DIR = resolve('..', '..');
 const DIST_FOLDER = join(ROOT_DIR, 'dist/');
-const REPORT_FOLDER = join(ROOT_DIR, 'report/');
+const REPORT_FOLDER = join(ROOT_DIR, 'reports/');
 
 const TASK_PATH = import.meta.dirname + '/task';
 
@@ -34,9 +34,9 @@ async function writeReports(list: Metadata[]) {
     const fileTypes: FileStats = {};
 
     const [files, unknown, redirects, sitemap] = await Promise.all([
-        openWithText(join(REPORT_FOLDER, 'files.json'), '{\n'),
-        open(join(REPORT_FOLDER, 'unknown.txt'), 'w'),
-        open(join(REPORT_FOLDER, 'redirects.txt'), 'w'),
+        openWithText(join(REPORT_FOLDER, 'files-types.json5'), '{\n'),
+        open(join(REPORT_FOLDER, 'files-unknown.txt'), 'w'),
+        open(join(REPORT_FOLDER, 'files-redirects.txt'), 'w'),
         openWithText(join(DIST_FOLDER, 'sitemap.xml'), SITEMAP_OPEN_TEXT)
     ]);
 
@@ -62,13 +62,11 @@ async function writeReports(list: Metadata[]) {
 
 let result: Metadata[] = [];
 
-async function addToReport(item: Metadata) {
-    result.push(item);
-}
-
 console.time('Data successfully built');
 
-await execFilesTask(DIST_FOLDER, TASK_PATH, addToReport);
+await execFilesTask(DIST_FOLDER, TASK_PATH, async function addToReport(item: Metadata) {
+    result.push(item);
+});
 
 result.sort(([path1], [path2]) => path1.localeCompare(path2));
 

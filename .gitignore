@@ -50,4 +50,5 @@ generated
 
 scripts/doindex/package-lock.json
 search-report*
+reports
 data/page_views_map.json
