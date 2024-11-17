@@ -133,7 +133,6 @@ async function legacyApi($: CheerioAPI, url: string) {
 
         objectID: finalUrl.replace(/\.html$/g, ''),
         parent: finalUrl,
-        pageType: 'api',
         url: new URL(finalUrl, pageUrl).toString(),
 
         headings: breadcrumbs.length ? breadcrumbs.reverse().join(' | ') : title,

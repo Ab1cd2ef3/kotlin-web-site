@@ -178,13 +178,13 @@ async function docs($: CheerioAPI, url: string) {
             ...DEFAULT_RECORD,
 
             objectID: finalUrl,
-            pageType: 'docs',
             url: new URL(finalUrl, pageUrl).toString(),
             parent: '/' + url,
 
             headings: headings.reverse().join(' | '),
             mainTitle,
             pageTitle,
+
             content
         };
 

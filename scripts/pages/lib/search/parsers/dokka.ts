@@ -217,12 +217,12 @@ async function apiReference($: CheerioAPI, url: string) {
 
         objectID: finalUrl.replace(/\.html$/g, ''),
         url: normalizedUrl.toString(),
+        parent: finalUrl,
 
         headings: breadcrumbs.length ? breadcrumbs.reverse().join(' | ') : title,
         mainTitle,
         pageTitle: mainTitle,
 
-        parent: finalUrl,
         content
     };
 

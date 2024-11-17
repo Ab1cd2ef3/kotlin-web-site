@@ -52,13 +52,13 @@ async function legacyMarkdown($: CheerioAPI, url: string) {
             ...DEFAULT_RECORD,
 
             objectID: finalUrl,
-            pageType: 'docs',
             url: new URL(finalUrl, pageUrl).toString(),
             parent: '/' + url,
 
             headings: headings.join(' | '),
             mainTitle: headings[headings.length - 1],
             pageTitle: headings.slice(0, -1).reverse().join(': '),
+
             content: await htmlToText($, [titleNode.nextSibling], function isFinalNode(node, level) {
                 return level === 0 && node instanceof Element && $(node).is('.typo-header[id]');
             })
