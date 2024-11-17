@@ -2,7 +2,6 @@ import { readFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { withSearchParser } from '../search/records.js';
 
-
 export const ROOT_DIR = resolve(import.meta.dirname, '..', '..', '..', '..');
 export const DIST_FOLDER = join(ROOT_DIR, 'dist/');
 export const REPORT_FOLDER = join(ROOT_DIR, 'reports/');

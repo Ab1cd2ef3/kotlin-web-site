@@ -11,7 +11,6 @@ export type SearchRecord = {
     pageTitle: string,
     content: string,
     pageViews: number,
-    scope?: 'api' | 'docs'
 }
 
 const DEFAULT_RECORD_VALUES = Object.freeze({

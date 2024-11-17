@@ -43,9 +43,15 @@ function checkUnique(r: SearchRecord, i: number, list: SearchRecord[]) {
     }
 }
 
-
 async function onMessage({ filePath, relativePath }: Opts) {
     const [type, $] = await getType(relativePath, filePath);
+    let modified: number;
+
+    if (type === 'Page_Documentation') {
+        const date = Date.parse($('.last-modified').text().replace('Last modified: ', ''));
+        if (!isNaN(date)) modified = date;
+    }
+
     const url = relativePath.replace(/\/index\.html$/g, '/');
 
     let records: SearchRecord[] = [];
@@ -66,7 +72,7 @@ async function onMessage({ filePath, relativePath }: Opts) {
         records.forEach(checkUnique);
     }
 
-    const data: Metadata = [url, { type, records }];
+    const data: Metadata = [url, { type, records, modified }];
 
     send({ event: 'result', data });
 }

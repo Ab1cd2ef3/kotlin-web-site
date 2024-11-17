@@ -25,7 +25,7 @@ function preFilterFiles({ relativePath: path }: Parameters<Filter>[0]) {
 
 let result: Metadata[] = [];
 
-EventEmitter.defaultMaxListeners = 20
+EventEmitter.defaultMaxListeners = 15
 
 await execFilesTask(
     DIST_FOLDER, TASK_PATH,
