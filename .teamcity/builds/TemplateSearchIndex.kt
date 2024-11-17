@@ -25,7 +25,7 @@ open class TemplateSearchIndex(init: BuildType.() -> Unit) : BuildType({
     vcs {
         root(
             KotlinLangOrg, """
-                scripts/doindex
+                scripts/pages
             """.trimIndent()
         )
         cleanCheckout = true
@@ -40,10 +40,10 @@ open class TemplateSearchIndex(init: BuildType.() -> Unit) : BuildType({
                 #!/bin/sh
                 set -e
                 npm install
-                node index.mjs
+                npm run generate-metadata
             """.trimIndent()
             dockerImage = "node:22-alpine"
-            workingDir = "scripts/doindex/"
+            workingDir = "scripts/pages/"
             dockerPull = true
         }
     }

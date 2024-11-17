@@ -14,16 +14,6 @@ object BuildSearchIndex : TemplateSearchIndex({
         param("env.ALGOLIA_INDEX_NAME", SEARCH_INDEX_NAME)
     }
 
-    vcs {
-        root(
-            KotlinLangOrg, """
-                scripts/doindex
-            """.trimIndent()
-        )
-        cleanCheckout = true
-        showDependenciesChanges = true
-    }
-
     triggers {
         schedule {
             schedulingPolicy = cron {
