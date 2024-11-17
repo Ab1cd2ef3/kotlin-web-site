@@ -1,4 +1,5 @@
 import { CheerioAPI } from 'cheerio';
+
 import { loadFile } from '../html.js';
 
 export type FileType =

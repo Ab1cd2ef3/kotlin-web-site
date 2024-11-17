@@ -1,6 +1,7 @@
 import { availableParallelism as cpuSize, cpus } from 'node:os';
 import { stderr, stdout } from 'node:process';
 import { ChildProcess, fork, Serializable } from 'node:child_process';
+
 import { createResolve } from './promise.js';
 
 type OnResult<T> = (result: T) => Promise<void>;

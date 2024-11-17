@@ -1,6 +1,7 @@
 import { readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { Dirent } from 'node:fs';
+
 import { newTaskExecutor } from '../pool.js';
 
 export type Opts = { filePath: string, relativePath: string }
@@ -12,7 +13,7 @@ export async function execFilesTask<R>(
     dir: string,
     scriptPath: string,
     onItem: OnItem<R>,
-    filter: Filter | void
+    filter?: Filter | null
 ) {
     let rootDir = dir;
 
